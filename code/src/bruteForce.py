@@ -1,7 +1,11 @@
 from enum import IntEnum
 import itertools
 import numpy as np
-
+from datetime import datetime
+from multiprocessing import Pool
+import math
+from copy import deepcopy
+import os
 
 class Nationalität(IntEnum):
     Brite = 0
@@ -143,13 +147,14 @@ def checkStraße(straße: list) -> bool:
 
 
 def bruteForce() -> list:
-    """brute force methode, nicht zu gebrauchen dauert vermutlich 48h
+    """brute force methode, nicht zu gebrauchen dauert vermutlich 142h
     """
     richtigeStraßen = []
+    j = 0
     for nationalitäten in itertools.permutations(Nationalität):
-        print(f"Muss 120 mal geprinted werden")
         for farben in itertools.permutations(Farbe):
-            print("Muss 14400 mal geprinted werden")
+            print("%s:\t%.7f %%" % (str(datetime.now()), j/14400))
+            j+=1
             for getränke in itertools.permutations(Getränk):
                 for zigarettenmarken in itertools.permutations(Zigarettenmarke):
                     for haustiere in itertools.permutations(Hausttier):
@@ -159,6 +164,44 @@ def bruteForce() -> list:
                             richtigeStraßen.append(list(straße))
                             print(straße)
     return richtigeStraßen
+
+def brutForcePermutationen(permutationen: list, ergebnisse:list = []):
+
+    if len(permutationen) != 0:
+        jetzigePermutation = permutationen.pop(0)
+        
+        for perm in jetzigePermutation:
+            
+            brutForcePermutationen(deepcopy(permutationen), ergebnisse + [perm])
+    else:
+        straße = list(np.transpose(ergebnisse))
+        if checkStraße(straße):
+            #richtigeStraßen.append(list(straße))
+            prettyPrint(straße)
+
+
+def parallelBruteForce(cores:int=8):
+    print("WARNING: code cant be interrupted, process must be killed to stop")
+    nationalitätenPermutationen = list(itertools.permutations(Nationalität))
+
+    teilung =  math.ceil(len(nationalitätenPermutationen)/  cores)
+
+    permutationen = [list(itertools.permutations(Farbe)), list(itertools.permutations(Getränk)), list(itertools.permutations(Zigarettenmarke)), list(itertools.permutations(Hausttier))]
+    args = [[deepcopy(nationalitätenPermutationen)[x : x + teilung]] + permutationen for x in range(0, len(nationalitätenPermutationen), teilung)]
+    
+    #brutForcePermutationen(args[0])
+
+    pool = Pool(cores)
+    try:   
+        results = pool.map(brutForcePermutationen, args)
+    except KeyboardInterrupt:
+        # FIXME doesnt work child blocks interrupt
+        pool.terminate()
+        pool.join()
+    finally:
+        pool.join()
+        pool.close()
+    #print(results)
 
 
 def prettyPrint(straße: list):
@@ -182,4 +225,9 @@ def evaluateBruteForce():
 
 
 if __name__ == "__main__":
-    evaluateBruteForce()
+    try:
+        # evaluateBruteForce()
+        parallelBruteForce(os.cpu_count())
+    except KeyboardInterrupt:
+        print("Closed by user. (ctrl-C)")
+        os._exit()
