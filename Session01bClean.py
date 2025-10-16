@@ -1,8 +1,9 @@
+import time
+t0 = time.time()
 from enum import IntEnum
 import itertools
 import numpy as np
 from copy import deepcopy
-import time
 import sys
 
 
@@ -212,6 +213,17 @@ def hausFit(straße, hausRegel):
             ergebendeStraßen.append(deepcopy(straße))
             ergebendeStraßen[-1][i][idx[0]] = hausRegel[idx[0]]
             ergebendeStraßen[-1][i][idx[1]] = hausRegel[idx[1]]
+        elif haus[idx[0]] == -1 and haus[idx[1]] == hausRegel[idx[1]]:
+            print("h1")
+            ergebendeStraßen.append(deepcopy(straße))
+            ergebendeStraßen[-1][i][idx[0]] = hausRegel[idx[0]]
+        elif haus[idx[1]] == -1 and haus[idx[0]] == hausRegel[idx[0]]:
+            print("h2")
+            ergebendeStraßen.append(deepcopy(straße))
+            ergebendeStraßen[-1][i][idx[1]] = hausRegel[idx[1]]
+        elif haus[idx[0]] == hausRegel[idx[0]] and haus[idx[1]] == hausRegel[idx[1]]:
+            print("h3")
+            ergebendeStraßen.append(deepcopy(straße))
         i += 1
     return ergebendeStraßen
 
@@ -243,6 +255,9 @@ def nachbarFit(straße, nachbarRegel):  # two houses
                 ergebendeStraßen.append(deepcopy(straße))
                 ergebendeStraßen[-1][x][idx[0]] = regel[0][idx[0]]
                 ergebendeStraßen[-1][x+1][idx[1]] = regel[1][idx[1]]
+            elif straße[x][idx[0]] == regel[0][idx[0]] and straße[x+1][idx[1]] == regel[1][idx[1]]:
+                print("n")
+                ergebendeStraßen.append(deepcopy(straße))
 
     return ergebendeStraßen
 
@@ -253,41 +268,75 @@ def prettyPrint(i):
     text = ""
     for x in i:
         for y in x:
-            text += "%11s" % y.name
+            try:
+                text += "%11s" % y.name
+            except AttributeError:
+                text += "%11s" % str(y)
         text += "\n"
 
     print(text, end="")
 
 
-def recursiveFitting(straßen, iteration=0):
+def recursiveFitting(straßen, hr, nr,t=None, iteration=0):
     """wendet alle haus und nachbarregeln rekursiv an
     """
+    if t is not None:
+        if time.time() - t[0] > t[1]:
+            return
 
-    if iteration < len(hausRegeln):
+    if iteration < len(hr):
         # zuerst die straßen regeln
         for straße in straßen:
-            neueStraßen = hausFit(straße, hausRegeln[iteration])
-            recursiveFitting(neueStraßen, iteration+1)
-    elif iteration < len(hausRegeln) + len(nachbarRegeln):
+            neueStraßen = hausFit(straße, hr[iteration])
+            recursiveFitting(neueStraßen, hr, nr, t, iteration+1)
+    elif iteration < len(hr) + len(nr):
         # danach die nachbarregeln
         for straße in straßen:
             neueStraßen = nachbarFit(
-                straße, nachbarRegeln[iteration-len(hausRegeln)])
-            recursiveFitting(neueStraßen, iteration+1)
-    else:
+                straße, nr[iteration-len(hr)])
+            recursiveFitting(neueStraßen, hr, nr, t, iteration+1)
+    elif t is None:
         for straße in straßen:
             print(f"Ein Ergebnis ist {checkStatement(straße)}")
             prettyPrint(straße)
 
 
-def fitting():
+def fitting(hr, nr, t=None):
     # fisch platziern an mögliche positionen
     for fischHausnummer in range(len(startStraße)):
         # startstraße ist die einzige festgelegten sachen von den annahmen  11, 12, 15
         straße = deepcopy(startStraße)
         straße[fischHausnummer][4] = Hausttier.Fisch
-        recursiveFitting([straße])
-    print("Keine weiteren Lösungen.")
+        recursiveFitting([straße],hr,nr,t, 0)
+    
+    if t is not None: 
+        print("Keine weiteren Lösungen.") 
+
+
+def imporveOrder():
+    orginalHausRegeln = deepcopy(hausRegeln)
+    orginalNachbarRegeln = deepcopy(nachbarRegeln)
+    fastestOrder = [0.01]
+    i = 0
+    j = 0
+    # 967680
+    for nr in itertools.permutations(orginalNachbarRegeln):
+        print(i)
+        i += 1
+        # 40319
+        for hr in itertools.permutations(orginalHausRegeln):
+            hr = deepcopy(hr)
+            nr = deepcopy(nr)
+            t0 = time.time()
+            fitting(hr, nr, [fastestOrder[0],t0])
+            t1 = time.time()
+            delta = t1 - t0
+            if delta < fastestOrder[0]:
+                fastestOrder = [delta, hr, nr]
+                print(delta)
+    
+    print(fastestOrder)
+
 
 
 if __name__ == "__main__":
@@ -298,8 +347,10 @@ if __name__ == "__main__":
         richtigeStraßen = bruteForce()  # ~ 48h (ungetested)
         for straße in richtigeStraßen:
             prettyPrint(straße)
+    elif sys.argv[-1].lower() == "i":
+        imporveOrder()
     else:
         # ! recursive fitting
-        fitting()  # ~ 0.03s
+        fitting(hausRegeln, nachbarRegeln)  # ~ 0.03s
 
     print(f"runtime: {time.time()-t0}s")
