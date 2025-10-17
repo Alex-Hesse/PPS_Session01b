@@ -3,12 +3,17 @@ from copy import deepcopy
 
 class StreetFitting():
 
-    def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1):
+    def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder = []):
         self.startStreet = deepcopy(startStreet)
         self.houseRules = deepcopy(houseRules)
         self.neighborRules = deepcopy(neighborRules)
         self.emptyVal = emptyVal
         self.__fittingStreets = []
+        if ruleOrder == []:
+            self.ruleOrder = [x for x in range(len(self.houseRules) + len(self.neighborRules))]
+        else:
+            self.ruleOrder = ruleOrder
+        print()
 
     @staticmethod
     def houseFit(street: list, houseRule: list, emptyVal=-1) -> list:
@@ -91,9 +96,30 @@ class StreetFitting():
         else:
             for street in streets:
                 self.__fittingStreets.append(street)
+                
+    def __recursiveFittingMixed(self, streets: list, iteration: int = 0):
+        """wendet alle house und neighborrules rekursiv an
+        """
+        if iteration < len(self.houseRules):
+            # zuerst die streets rules
+            ruleIndex = self.ruleOrder[iteration]
+            for street in streets:
+                newStreets = self.houseFit(
+                    street, self.houseRules[ruleIndex], self.emptyVal)
+                self.__recursiveFittingMixed(newStreets, iteration+1)
+        elif iteration < len(self.houseRules) + len(self.neighborRules):
+            # danach die neighborrules
+            ruleIndex = self.ruleOrder[iteration]
+            for street in streets:
+                newStreets = self.neighborFit(
+                    street, self.neighborRules[ruleIndex-len(self.houseRules)], self.emptyVal)
+                self.__recursiveFittingMixed(newStreets, iteration+1)
+        else:
+            for street in streets:
+                self.__fittingStreets.append(street)
 
     def recursiveFitting(self, street: list) -> list:
-        self.__recursiveFitting([street])
+        self.__recursiveFittingMixed([street])
         return self.fittingStreets
 
     def calculate(self) -> list:

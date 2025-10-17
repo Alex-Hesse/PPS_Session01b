@@ -9,7 +9,7 @@ class CmdLineOptions(argparse.ArgumentParser):
     def __init__(self):
         super().__init__(prog='PPS_Session01b',
                          description='Solves the riddle of Albert Einstein.',
-                         epilog='Responsible: Alexander Hesse\nVersion: -')
+                         epilog='Responsible: Alexander Hesse\nVersion: 0.1')
 
         self.add_argument("-r", "--rulesFile", help="path to rule config File",
                           default=abspath(join(SCRIPT_DIR, "..", "..", "resources", "rules.json")), required=False)
