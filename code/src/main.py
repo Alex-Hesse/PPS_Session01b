@@ -7,6 +7,8 @@ MSG_CAN_NOT_BE_INTERRUPTED = "WARNING process cant be Keybord Interrupted"
 
 
 def main():
+    """main fuction
+    """
 
     cmd = CmdLineOptions()
 
