@@ -1,4 +1,5 @@
 from streetFitting import StreetFitting
+from streetFittingIter import StreetFittingIter
 from convertStrings2Integers import ConvertStrings2Integers
 import os
 import json
@@ -19,7 +20,7 @@ def prettyPrint2D(array2D: list[list]):
     text = ""
     for row in array2D:
         for column in row:
-            text += "%11s" % column
+            text += "\t%s" % str(column)
         text += "\n"
 
     print(text, end="")
@@ -58,7 +59,7 @@ def useSolver(path: str, useConverter: bool = True):
         except KeyError as e:
             print(e)
             raise KeyError("useSolver: Json config file is missing a key")
-        
+
         if useConverter:
             conv = ConvertStrings2Integers()
             startStreet = conv.obj2int(startStreet)
@@ -81,7 +82,26 @@ def useSolver(path: str, useConverter: bool = True):
         raise FileNotFoundError(f"{path}")
 
 
-def calcSpeed(startStreet: list, houseRules : list, neighborRules: list, emptyVal, basicOrder: list, start:int, end:int) -> list:
+def calcSpeedWrapper(conf: tuple) -> list:
+    """_summary_
+
+    Args:
+        conf (tuple): (startStreet (list): nested list with the layouts of the houses
+            houseRules (list): rules for a house, needs 2 constrains
+            neighborRules (list): rules for neighbors
+            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+            basicOrder (list): order the rules should be applied (first house, then neighbor).
+            start (int): start point of ther permutations
+            end (int): end point of the perutations
+            id (int): id)
+
+    Returns:
+        list: [solvetime, order]
+    """
+    return calcSpeed(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7])
+
+
+def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int) -> list:
     """goes permutations from start to end and returns the fastest order to solve the riddle
 
     Args:
@@ -92,27 +112,37 @@ def calcSpeed(startStreet: list, houseRules : list, neighborRules: list, emptyVa
         basicOrder (list): order the rules should be applied (first house, then neighbor).
         start (int): start point of ther permutations
         end (int): end point of the perutations
+        id (int): id
 
     Returns:
         list: [solvetime, order]
     """
-    minTime = 10
+    minIter = 100  # 1e254
     minOrder = []
     orders = itertools.islice(itertools.permutations(basicOrder), start, end)
+
+    iterations = end-start
+    i = 0
+    iCount = 40000  # number of % prints
+    iMod = iterations // iCount
+    fitting = StreetFittingIter(
+        startStreet, houseRules, neighborRules, emptyVal, minIter)
     for order in orders:
-        fitting = StreetFitting(startStreet, houseRules,
-                                neighborRules, emptyVal)
         fitting.ruleOrder = order
-        t0 = time.time()
         fitting.calculate()
-        t1 = time.time()
-        delta = t1 - t0
-        if delta < minTime:
-            minTime = delta
+        if fitting.iteration < minIter:
+            minIter = fitting.iteration
+            fitting.minIter = minIter
             minOrder = order
-    return [minTime, minOrder]
+            print(f"Process {id}: \t{minIter} \t\tOrder: {minOrder}")
 
+        if i % iMod == 0:
+            print(f"Process {id}: \t{100*i/iterations} %")
+        i += 1
 
+    return [minIter, minOrder]
+
+#77 (0, 1, 2, 3, 8, 6, 4, 5, 10, 7, 9, 11)
 def rulesIterator(path: str, cores: int = 0):
     """prints #cores fastest iterations (ordered)
 
@@ -160,13 +190,15 @@ def rulesIterator(path: str, cores: int = 0):
                 end = math.factorial(len(fitting.ruleOrder))
 
             args.append((startStreet, houseRules, neighborRules,
-                        emptyVal, fitting.ruleOrder, start, end))
+                        emptyVal, fitting.ruleOrder, start, end, i+1))
 
-        pool = Pool(cores)
-        try:
-            results = pool.map(calcSpeed, args)
-        except:
-            os._exit()
+        results = [calcSpeedWrapper(args[0])]
+        # pool = Pool(cores)
+        # try:
+        #     results = pool.map(calcSpeedWrapper, args)
+        # except Exception as e:
+        #     print(e)
+        #     os._exit(-1)
 
         results.sort(key=lambda x: x[0])
         prettyPrint2D(results)

@@ -22,7 +22,7 @@ def main():
             bruteForce.parallelBruteForce(os.cpu_count())
         if args.improveOrder:
             print(MSG_CAN_NOT_BE_INTERRUPTED)
-            configs.rulesIterator(args.rulesFile, os.cpu_count())
+            configs.rulesIterator(args.rulesFile, 8)
     else:
         configs.useSolver(args.rulesFile)
 
