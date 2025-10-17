@@ -1,5 +1,22 @@
 {
-    "startStraße": [],
-    "hausRegeln": [],
-    "straßenRegeln": []
+    "startStreet": [["", "", "", "", ""],
+                    ["", "", "", "", ""],
+                    ["", "", "Milch", "", ""],
+                    ["", "Blau", "", "", ""],
+                    ["Norweger", "", "", "", ""]],
+    "houseRules": [["Brite", "Rot", "", "", ""],
+              ["Schwede", "", "", "", "Hund"],
+              ["Daene", "", "Tee", "", ""],
+              ["Deutsche", "", "", "Rothmanns", ""],
+              ["", "Gruen", "Kaffee", "", ""],
+              ["", "", "Bier", "Winfield", ""],
+              ["", "Gelb", "", "Dunhill", ""],
+              ["", "", "", "Pall Mall", "Vogel"]],
+    "neighborRules": [[[["", "Gruen", "", "", ""], ["", "Weiss", "", "", ""]]],
+                 [[["", "", "", "Marlboro", ""], ["", "", "", "", "Katze"]],
+                  [["", "", "", "", "Katze"], ["", "", "", "Marlboro", ""]]],
+                 [[["", "", "", "Marlboro", ""], ["", "", "Wasser", "", ""]],
+                  [["", "", "Wasser", "", ""], ["", "", "", "Marlboro", ""]]],
+                 [[["", "", "", "Dunhill", ""], ["", "", "", "", "Pferd"]],
+                  [["", "", "", "", "Pferd"], ["", "", "", "Dunhill", ""]]]]
 }

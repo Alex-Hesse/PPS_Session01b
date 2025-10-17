@@ -3,7 +3,7 @@ from copy import deepcopy
 
 class StreetFitting():
 
-    def __init__(self, startStreet: list, houseRules:list , neighborRules:list, emptyVal = -1):
+    def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1):
         self.startStreet = deepcopy(startStreet)
         self.houseRules = deepcopy(houseRules)
         self.neighborRules = deepcopy(neighborRules)
@@ -11,10 +11,11 @@ class StreetFitting():
         self.__fittingStreets = []
 
     @staticmethod
-    def houseFit(street:list, houseRule:list, emptyVal = -1) -> list:
+    def houseFit(street: list, houseRule: list, emptyVal=-1) -> list:
         """wendet houserules f an auf street und gibt alle möglichen 
         sich aus street + rule resultingn streets zurück (keine wenn unmöglich)
         """
+
         resultingStreets = []
         idx = []
         i = 0
@@ -40,7 +41,7 @@ class StreetFitting():
         return resultingStreets
 
     @staticmethod
-    def neighborFit(street:list, neighborRule:list, emptyVal = -1) -> list:
+    def neighborFit(street: list, neighborRule: list, emptyVal=-1) -> list:
         """wendet neighborrules f an auf street und gibt alle möglichen 
         sich aus street + rule resultingn streets zurück (keine wenn unmöglich)
         """
@@ -72,28 +73,32 @@ class StreetFitting():
 
         return resultingStreets
 
-    def __recursiveFitting(self, streets:list, iteration: int = 0):
+    def __recursiveFitting(self, streets: list, iteration: int = 0):
         """wendet alle house und neighborrules rekursiv an
         """
         if iteration < len(self.houseRules):
             # zuerst die streets rules
             for street in streets:
-                newStreets = self.houseFit(street, self.houseRules[iteration], self.emptyVal)
+                newStreets = self.houseFit(
+                    street, self.houseRules[iteration], self.emptyVal)
                 self.__recursiveFitting(newStreets, iteration+1)
         elif iteration < len(self.houseRules) + len(self.neighborRules):
             # danach die neighborrules
             for street in streets:
-                newStreets = self.neighborFit(street, self.neighborRules[iteration-len(self.houseRules)], self.emptyVal)
+                newStreets = self.neighborFit(
+                    street, self.neighborRules[iteration-len(self.houseRules)], self.emptyVal)
                 self.__recursiveFitting(newStreets, iteration+1)
         else:
             for street in streets:
                 self.__fittingStreets.append(street)
-    
-    def recursiveFitting(self, streets:list) -> list:
-        self.__recursiveFitting(streets, 0)
-        return self.fittingStreets()
+
+    def recursiveFitting(self, street: list) -> list:
+        self.__recursiveFitting([street])
+        return self.fittingStreets
+
+    def calculate(self) -> list:
+        return self.recursiveFitting(self.startStreet)
 
     @property
     def fittingStreets(self):
         return deepcopy(self.__fittingStreets)
-

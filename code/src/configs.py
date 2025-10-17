@@ -1,72 +1,47 @@
-
-from enum import IntEnum
-
-
-class Nationalität(IntEnum):
-    Brite = 0
-    Schwede = 1
-    Däne = 2
-    Deutsche = 3
-    Norweger = 4
+from streetFitting import StreetFitting
+from convertStrings2Integers import ConvertStrings2Integers
+import os
+import json
+from enum import Enum
 
 
-class Farbe(IntEnum):
-    Rot = 0
-    Grün = 1
-    Gelb = 2
-    Blau = 3
-    Weiß = 4
+def prettyPrint2D(array2D):
+    """Pretty print für straße
+    """
+    text = ""
+    for row in array2D:
+        for column in row:
+            text += "%11s" % column
+        text += "\n"
+
+    print(text, end="")
 
 
-class Getränk(IntEnum):
-    Tee = 0
-    Kaffee = 1
-    Bier = 2
-    Milch = 3
-    Wasser = 4
+class JsonKeys(str, Enum):
+    startStreet = "startStreet"
+    houseRules = "houseRules"
+    neighborRules = "neighborRules"
 
 
-class Zigarettenmarke(IntEnum):
-    Rothmanns = 0
-    Winfield = 1
-    Dunhill = 2
-    Pall_Mall = 3
-    Marlboro = 4
+def useSolver(path: str):
+    if os.path.isfile(path):
 
+        with open(path, 'r') as file:
+            data = json.load(file)
 
-class Hausttier(IntEnum):
-    Hund = 0
-    Vogel = 1
-    Katze = 2
-    Pferd = 3
-    Fisch = 4
+        conv = ConvertStrings2Integers()
 
+        startStreet = conv.obj2int(data[JsonKeys.startStreet])
+        houseRules = conv.obj2int(data[JsonKeys.houseRules])
+        neighborRules = conv.obj2int(data[JsonKeys.neighborRules])
+        emptyVal = conv.str2int("")
 
-class Idx(IntEnum):
-    Nationalität = 0
-    Farbe = 1
-    Getränk = 2
-    Zigarettenmarke = 3
-    Hausttier = 4
+        fitting = StreetFitting(startStreet, houseRules,
+                                neighborRules, emptyVal)
+        results = fitting.calculate()
 
+        for solution in results:
+            prettyPrint2D(conv.obj2str(solution))
 
-class Position(IntEnum):
-    Links = -1
-    Erste = 4
-    Rechts = 1
-    Mitte = 2
-    Letzte = 0
-
-
-class StraßenConfig():
-    pass
-    
-
-
-def convert(rules=[]):
-    a = [0, 2, 3, 5, 6]
-    n = 2
-    b = [i for i in a if i % n == 0]
-    print(b)
-
-convert()
+    else:
+        raise FileNotFoundError(f"{path}")
