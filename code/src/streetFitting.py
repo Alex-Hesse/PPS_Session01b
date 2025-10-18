@@ -1,6 +1,31 @@
 from copy import deepcopy
 
 
+exampleVals = {
+    "startStreet": [["", "", "", "", ""],
+                    ["", "", "", "", ""],
+                    ["", "", "Milch", "", ""],
+                    ["", "Blau", "", "", ""],
+                    ["Norweger", "", "", "", ""]],
+    "houseRules": [["Brite", "Rot", "", "", ""],
+              ["Schwede", "", "", "", "Hund"],
+              ["Daene", "", "Tee", "", ""],
+              ["Deutsche", "", "", "Rothmanns", ""],
+              ["", "Gruen", "Kaffee", "", ""],
+              ["", "", "Bier", "Winfield", ""],
+              ["", "Gelb", "", "Dunhill", ""],
+              ["", "", "", "Pall Mall", "Vogel"]],
+    "neighborRules": [[[["", "Gruen", "", "", ""], ["", "Weiss", "", "", ""]]],
+                 [[["", "", "", "Marlboro", ""], ["", "", "", "", "Katze"]],
+                  [["", "", "", "", "Katze"], ["", "", "", "Marlboro", ""]]],
+                 [[["", "", "", "Marlboro", ""], ["", "", "Wasser", "", ""]],
+                  [["", "", "Wasser", "", ""], ["", "", "", "Marlboro", ""]]],
+                 [[["", "", "", "Dunhill", ""], ["", "", "", "", "Pferd"]],
+                  [["", "", "", "", "Pferd"], ["", "", "", "Dunhill", ""]]]],
+    "ruleOrder": [],
+    "emptyVal": ""
+}
+
 class StreetFitting():
 
     def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[]):
@@ -15,7 +40,7 @@ class StreetFitting():
         """
         self.startStreet = deepcopy(startStreet)
         self.houseRules = deepcopy(houseRules)
-        self.neighborRules = deepcopy(neighborRules)
+        self.neighborRules = deepcopy(neighborRules) 
         self.emptyVal = emptyVal
         self._fittingStreets = []
         if ruleOrder == []:
@@ -84,6 +109,8 @@ class StreetFitting():
                     if rule[x][y] != emptyVal:
                         idx.append(y)
                         break
+            if len(idx) == 0:
+                continue
 
             for x in range(4):
                 if street[x][idx[0]] == emptyVal and street[x+1][idx[1]] == emptyVal:

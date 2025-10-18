@@ -3,8 +3,6 @@ import configs
 import bruteForce
 import os
 
-MSG_CAN_NOT_BE_INTERRUPTED = "WARNING process cant be Keybord Interrupted"
-
 
 def main():
     """main fuction
@@ -18,11 +16,9 @@ def main():
         if args.bruteForce:
             bruteForce.evaluateBruteForce()
         if args.parallelBruteForce:
-            print(MSG_CAN_NOT_BE_INTERRUPTED)
             bruteForce.parallelBruteForce(os.cpu_count())
         if args.improveOrder:
-            print(MSG_CAN_NOT_BE_INTERRUPTED)
-            configs.rulesIterator(args.rulesFile, 8)
+            configs.rulesIterator(args.rulesFile)
     else:
         configs.useSolver(args.rulesFile)
 

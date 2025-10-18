@@ -2,7 +2,7 @@ from enum import IntEnum
 import itertools
 import numpy as np
 from datetime import datetime
-from multiprocessing import Pool
+import multiprocessing 
 import math
 from copy import deepcopy
 import os
@@ -186,7 +186,6 @@ def brutForcePermutationen(permutationen: list, ergebnisse: list = []):
 
 
 def parallelBruteForce(cores: int = 8):
-    print("WARNING: code cant be interrupted, process must be killed to stop")
     nationalitätenPermutationen = list(itertools.permutations(Nationalität))
 
     teilung = math.ceil(len(nationalitätenPermutationen) / cores)
@@ -197,17 +196,18 @@ def parallelBruteForce(cores: int = 8):
             permutationen for x in range(0, len(nationalitätenPermutationen), teilung)]
 
     # brutForcePermutationen(args[0])
-
-    pool = Pool(cores)
-    try:
-        results = pool.map(brutForcePermutationen, args)
-    except KeyboardInterrupt:
-        # FIXME doesnt work child blocks interrupt
-        pool.terminate()
-        pool.join()
-    finally:
-        pool.join()
-        pool.close()
+    with multiprocessing.Manager() as manager:
+        pool = manager.Pool(cores)
+        try:
+            results = pool.map(brutForcePermutationen, args)
+        except KeyboardInterrupt:
+            # FIXME doesnt work child blocks interrupt
+            pool.terminate()
+            pool.join()
+        finally:
+            pool.join()
+            pool.close()
+            os._exit(1)
     # print(results)
 
 
@@ -232,9 +232,6 @@ def evaluateBruteForce():
 
 
 if __name__ == "__main__":
-    try:
-        # evaluateBruteForce()
-        parallelBruteForce(os.cpu_count())
-    except KeyboardInterrupt:
-        print("Closed by user. (ctrl-C)")
-        os._exit()
+
+    parallelBruteForce(os.cpu_count())
+
