@@ -18,7 +18,7 @@ def main():
         if args.parallelBruteForce:
             bruteForce.parallelBruteForce(os.cpu_count())
         if args.improveOrder:
-            configs.rulesIterator(args.rulesFile)
+            configs.rulesIterator(args.rulesFile, 12, 54)
     else:
         configs.useSolver(args.rulesFile)
 

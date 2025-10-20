@@ -1,5 +1,5 @@
 from streetFitting import StreetFitting
-from streetFittingIter import StreetFittingIter
+from streetFittingNumpy import StreetFittingNumpy
 from convertStrings2Integers import ConvertStrings2Integers
 import os
 import json
@@ -9,7 +9,9 @@ import itertools
 import math
 from copy import deepcopy
 import time
-
+from streetFittingFunctionalNumpy import recursiveFittingCounterNumpy
+from streetFittingFunctionalNumba import recursiveFittingCounterNumba
+import numpy as np
 
 def prettyPrint2D(array2D: list[list]):
     """pretty print of a 2D array (nested list)
@@ -21,7 +23,7 @@ def prettyPrint2D(array2D: list[list]):
     try:
         for row in array2D:
             for column in row:
-                text += "\t%s" % str(column)
+                text += "\t%8s" % str(column)
             text += "\n"
     except:
         text = str(array2D)
@@ -37,7 +39,13 @@ class JsonKeys(str, Enum):
     emptyVal = "emptyVal"
 
 
-def useSolver(path: str, useConverter: bool = True):
+class SolverTypes(str, Enum):
+    classSolver = "class"
+    functionalSolver = "functional"
+    numbaSolver = "numba"
+
+
+def useSolver(path: str, useConverter: bool = True, whichSolver: SolverTypes = SolverTypes.classSolver):
     """opens json file, runs the solver
 
     Args:
@@ -70,13 +78,13 @@ def useSolver(path: str, useConverter: bool = True):
             neighborRules = conv.obj2int(neighborRules)
             emptyVal = conv.str2int(emptyVal)
 
-        fitting = StreetFitting(startStreet, houseRules,
+        fitting = StreetFittingNumpy(startStreet, houseRules,
                                 neighborRules, emptyVal, ruleOrder)
         results = fitting.calculate()
 
         for solution in results:
             if useConverter:
-                arr = conv.obj2str(solution)
+                arr = conv.obj2str([[int(i) for i in r] for r in solution])
             else:
                 arr = solution
             prettyPrint2D(arr)
@@ -101,12 +109,10 @@ def calcSpeedWrapper(conf: tuple) -> list:
     Returns:
         list: [solvetime, order]
     """
-    return calcSpeed(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7])
+    return calcSpeed(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
 
-from streetFittingFunctional import recursiveFitting
-import numpy as np
 
-def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int) -> list:
+def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: int) -> list:
     """goes permutations from start to end and returns the fastest order to solve the riddle
 
     Args:
@@ -123,20 +129,21 @@ def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal
         list: [solvetime, order]
     """
     minOrder = []
-    orders = itertools.islice(itertools.permutations(basicOrder), start, end)
-    minIter = 26
+    minIter = 27
     iterations = end-start
-    i = 0
-    iCount = 4000  # number of % prints
+    alreadyCompleted = (iterations  * percentage) // 100
+    start +=  alreadyCompleted
+    i = alreadyCompleted
+    # todo
+    iCount = 400  # number of % prints
     iMod = iterations // iCount
-    # fitting = StreetFittingIter(
-    #     startStreet, houseRules, neighborRules, emptyVal, minIter)
     startStreet =  np.array([startStreet])
     houseRules = np.array(houseRules)
     neighborRules = np.array(neighborRules)
+    orders = itertools.islice(itertools.permutations(basicOrder), start, end)
     t0 = time.process_time()
     for order in orders:
-        counter = recursiveFitting( startStreet, houseRules, neighborRules, emptyVal, np.array(order), minIter)
+        counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), minIter)
         # fitting.ruleOrder = order
         # fitting.calculate()
         if counter < minIter:
@@ -144,22 +151,19 @@ def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal
             minOrder = order
             print(f"Process {id}: \t{minIter} \t\tOrder: {minOrder}")
             try:
-                with open(str(minIter)+str(minOrder), "w", encoding='utf-8') as file:
+                with open(os.path.join(".temp", str(minIter)+str(minOrder)), "w", encoding='utf-8') as file:
                     file.write(str(minIter)+str(minOrder))
             except:
                 print("error"+ str(minIter)+str(minOrder))
 
+        i += 1
         if i % iMod == 0:
             print(f"Process {id}: \t{100*i/iterations} %")  # {time.process_time()-t0}")
-        i += 1
-
+    print(f"Process {id}: Done!")
     return [minIter, minOrder]
-# old
-# 53              Order: (8, 0, 1, 2, 6, 4, 3, 5, 10, 7, 9, 11)
-#  32              Order: (8, 0, 2, 6, 4, 5, 10, 3, 1, 7, 9, 11)
-# new
-# 88              Order: (8, 0, 1, 6, 4, 2, 3, 5, 10, 7, 9, 11)
-def rulesIterator(path: str, cores: int = 0):
+
+
+def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
     """prints #cores fastest iterations (ordered)
 
     Args:
@@ -196,8 +200,8 @@ def rulesIterator(path: str, cores: int = 0):
         chunkSize = math.factorial(len(fitting.ruleOrder)) // cores
         
         with multiprocessing.Manager() as manager:
-            minIter = manager.Value('i', 1e10)
-            lock = manager.Lock()
+            # minIter = manager.Value('i', 1e10)
+            # lock = manager.Lock()
 
             args = []
             # Calculate the start and end index for each core
@@ -210,7 +214,7 @@ def rulesIterator(path: str, cores: int = 0):
                     end = math.factorial(len(fitting.ruleOrder))
 
                 args.append((startStreet, houseRules, neighborRules,
-                            emptyVal, fitting.ruleOrder, start, end, i+1))#, minIter, lock))
+                            emptyVal, fitting.ruleOrder, start, end, i+1, percentage))#, minIter, lock))
 
             # results = [calcSpeedWrapper(args[8])]
             # return

@@ -15,16 +15,19 @@ exampleVals = {
               ["", "", "Bier", "Winfield", ""],
               ["", "Gelb", "", "Dunhill", ""],
               ["", "", "", "Pall Mall", "Vogel"]],
-    "neighborRules": [[[["", "Gruen", "", "", ""], ["", "Weiss", "", "", ""]]],
+    "neighborRules": [[[["", "Gruen", "", "", ""], ["", "Weiss", "", "", ""]],
+                    [["", "", "", "", ""], ["", "", "", "", ""]]],
                  [[["", "", "", "Marlboro", ""], ["", "", "", "", "Katze"]],
                   [["", "", "", "", "Katze"], ["", "", "", "Marlboro", ""]]],
                  [[["", "", "", "Marlboro", ""], ["", "", "Wasser", "", ""]],
                   [["", "", "Wasser", "", ""], ["", "", "", "Marlboro", ""]]],
                  [[["", "", "", "Dunhill", ""], ["", "", "", "", "Pferd"]],
                   [["", "", "", "", "Pferd"], ["", "", "", "Dunhill", ""]]]],
-    "ruleOrder": [],
+    "ruleOrder": [8, 0, 6, 4, 2, 5, 10, 3, 1, 7, 9, 11],
+    "iters": 26,
     "emptyVal": ""
 }
+
 
 class StreetFitting():
 
