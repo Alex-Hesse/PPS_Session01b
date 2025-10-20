@@ -46,7 +46,7 @@ class StreetFitting():
         self.neighborRules = deepcopy(neighborRules) 
         self.emptyVal = emptyVal
         self._fittingStreets = []
-        if ruleOrder == []:
+        if len(ruleOrder) == 0:
             self.ruleOrder = [x for x in range(
                 len(self.houseRules) + len(self.neighborRules))]
         else:

@@ -1,10 +1,8 @@
-from copy import deepcopy
 import numpy as np
-from numba import njit
 import numba
+from numba import njit, types
 from numba.typed import List
 import time
-
 
 
 STREET_TYPE = numba.typeof(np.zeros((5, 5), dtype=np.int64))
@@ -191,6 +189,20 @@ def recursiveFittingNumba(streets: np.ndarray, houseRules: np.ndarray, neighborR
     result = _recursiveFittingNumba(List(streets), houseRules, neighborRules, emptyVal, ruleOrder, 0, List.empty_list(STREET_TYPE))
     return result
 
+def compileNumba():
+    """doesnt work"""
+    street = np.full((5,5), 0)
+    streets = List(np.array([street for _ in range(7)]))
+    houseRule = np.array([1,1,0,0,0])
+    houseRules = np.array([houseRule for _ in range(4)])
+    neighborRule = np.array([[[0,0,2,0,0], [0,0,3,0,0]], [[0,0,0,0,0], [0,0,0,0,0]]])
+    neighborRules = np.array([neighborRule])
+    ruleOrder = np.arange(len(houseRules) + len(neighborRules))
+    
+    #houseFitNumba(street, houseRule, 0)
+    #neighborFitNumba(street, neighborRule, 0)
+    recursiveFittingCounterNumba(streets, houseRules, neighborRules, 0, ruleOrder, 5)
+    recursiveFittingNumba(streets, houseRules, neighborRules, 0, ruleOrder)
 
 if __name__ == "__main__":
     from convertStrings2Integers import ConvertStrings2Integers
@@ -207,6 +219,7 @@ if __name__ == "__main__":
         print(e)
         raise KeyError("rulesIterator: Json config file is missing a key")
 
+    print("Compiling Numba")
     t0 = time.perf_counter()
     recursiveFittingCounterNumba(startStreet, houseRules,neighborRules, emptyVal, ruleOrder, 1000)
     recursiveFittingNumba(startStreet, houseRules,neighborRules, emptyVal, ruleOrder)
@@ -214,6 +227,7 @@ if __name__ == "__main__":
     print(f"Numba compilation time: {t1 -t0}s")
 
     iters = 10000
+    print(f"Running {iters} times to measure average...")
     t0 = time.perf_counter()
     for x in range(iters):
         recursiveFittingCounterNumba(startStreet, houseRules,neighborRules, emptyVal, ruleOrder, 1000)
@@ -228,6 +242,3 @@ if __name__ == "__main__":
 
     for res in result:
         prettyPrint2D(conv.obj2str([[int(i) for i in r] for r in res]))
-    
-    
-        

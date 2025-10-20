@@ -1,6 +1,7 @@
 import argparse
 from os.path import join, abspath
 from pathlib import Path
+from configs import SolverImplementations
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -14,7 +15,10 @@ class CmdLineOptions(argparse.ArgumentParser):
                          epilog='Responsible: Alexander Hesse\nVersion: 0.1')
 
         self.add_argument("-r", "--rulesFile", help="path to rule config File",
-                          default=abspath(join(SCRIPT_DIR, "..", "..", "resources", "rules.json")), required=False)
+                          default=abspath(join(SCRIPT_DIR, "..", "..", "resources", "optimalRules.json")), required=False)
+        solverKeyList = list(SolverImplementations.__members__.values())
+        self.add_argument("-s", "--solverImplementation", help=f"Solver implementation choose: {solverKeyList}. Defaults to {solverKeyList[0]}",
+                          default=solverKeyList[0], required=False)
         self.add_argument("-b", "--bruteForce", help="flag to use brute force",
                           action='store_true', default=False)
         self.add_argument("-p", "--parallelBruteForce",

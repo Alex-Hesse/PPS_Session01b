@@ -18,13 +18,13 @@ def main():
         if args.parallelBruteForce:
             bruteForce.parallelBruteForce(os.cpu_count())
         if args.improveOrder:
-            configs.rulesIterator(args.rulesFile, 12, 54)
+            configs.rulesIterator(args.rulesFile, 12, 0)
     else:
-        configs.useSolver(args.rulesFile)
+        configs.useSolver(args.rulesFile, args.solverImplementation)
 
 
 if __name__ == "__main__":
     import time
-    t0 = time.time()
+    t0 = time.perf_counter()
     main()
-    print(f"Runtime main: {time.time() - t0}s")
+    print(f"Runtime main: {time.perf_counter() - t0}s")

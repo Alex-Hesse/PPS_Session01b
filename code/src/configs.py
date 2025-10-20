@@ -9,8 +9,8 @@ import itertools
 import math
 from copy import deepcopy
 import time
-from streetFittingFunctionalNumpy import recursiveFittingCounterNumpy
-from streetFittingFunctionalNumba import recursiveFittingCounterNumba
+from streetFittingFunctionalNumpy import recursiveFittingCounterNumpy, recursiveFittingNumpy
+from streetFittingFunctionalNumba import recursiveFittingCounterNumba, recursiveFittingNumba
 import numpy as np
 
 def prettyPrint2D(array2D: list[list]):
@@ -39,13 +39,14 @@ class JsonKeys(str, Enum):
     emptyVal = "emptyVal"
 
 
-class SolverTypes(str, Enum):
+class SolverImplementations(str, Enum):
     classSolver = "class"
+    classNumpySolver = "classNumpy"
     functionalSolver = "functional"
     numbaSolver = "numba"
 
 
-def useSolver(path: str, useConverter: bool = True, whichSolver: SolverTypes = SolverTypes.classSolver):
+def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver):
     """opens json file, runs the solver
 
     Args:
@@ -67,28 +68,63 @@ def useSolver(path: str, useConverter: bool = True, whichSolver: SolverTypes = S
             neighborRules = data[JsonKeys.neighborRules]
             emptyVal = data[JsonKeys.emptyVal]
             ruleOrder = data[JsonKeys.ruleOrder]
+            if len(ruleOrder) == 0:
+                ruleOrder = np.arange(len(houseRules)+len(neighborRules))
         except KeyError as e:
             print(e)
             raise KeyError("useSolver: Json config file is missing a key")
 
-        if useConverter:
-            conv = ConvertStrings2Integers()
-            startStreet = conv.obj2int(startStreet)
-            houseRules = conv.obj2int(houseRules)
-            neighborRules = conv.obj2int(neighborRules)
-            emptyVal = conv.str2int(emptyVal)
-
-        fitting = StreetFittingNumpy(startStreet, houseRules,
+        conv = ConvertStrings2Integers()
+        startStreet = conv.obj2int(startStreet)
+        houseRules = conv.obj2int(houseRules)
+        neighborRules = conv.obj2int(neighborRules)
+        emptyVal = conv.str2int(emptyVal)
+        
+        match SolverImplementations(whichSolver):
+            case SolverImplementations.classSolver:
+                t0 = time.perf_counter()
+                fitting = StreetFitting(startStreet, houseRules,
                                 neighborRules, emptyVal, ruleOrder)
-        results = fitting.calculate()
-
+                results = fitting.calculate()
+                
+            case SolverImplementations.classNumpySolver:
+                t0 = time.perf_counter()
+                fitting = StreetFittingNumpy(startStreet, houseRules,
+                                neighborRules, emptyVal, ruleOrder)
+                results = fitting.calculate()
+                
+            case SolverImplementations.functionalSolver:
+                
+                startStreet = np.array([startStreet])
+                houseRules = np.array(houseRules)
+                neighborRules = np.array(neighborRules)
+                emptyVal = np.array(emptyVal)
+                ruleOrder = np.array(ruleOrder)
+                t0 = time.perf_counter()
+                results = recursiveFittingNumpy(startStreet, houseRules, neighborRules, emptyVal, ruleOrder)
+                
+            case SolverImplementations.numbaSolver:
+                
+                startStreet = np.array([startStreet])
+                houseRules = np.array(houseRules)
+                neighborRules = np.array(neighborRules)
+                emptyVal = np.array(emptyVal)
+                ruleOrder = np.array(ruleOrder)
+                print("Compile numba")
+                t0 = time.perf_counter()
+                recursiveFittingNumba(startStreet, houseRules, neighborRules, emptyVal, np.arange(len(houseRules) + len(neighborRules)))
+                t1 = time.perf_counter()
+                print(f"Compile numba time: {t1-t0}")
+                t0 = time.perf_counter()
+                results = recursiveFittingNumba(startStreet, houseRules, neighborRules, emptyVal, ruleOrder)
+            case _:
+                raise TypeError(f"Invalid SolverImplenation: {whichSolver}")
+        t1 = time.perf_counter()
+        
         for solution in results:
-            if useConverter:
-                arr = conv.obj2str([[int(i) for i in r] for r in solution])
-            else:
-                arr = solution
+            arr = conv.obj2str([[int(i) for i in r] for r in solution])
             prettyPrint2D(arr)
-
+        print(f"{whichSolver} calculation time: {t1-t0}s")
     else:
         raise FileNotFoundError(f"{path}")
 
