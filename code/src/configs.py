@@ -9,9 +9,13 @@ import itertools
 import math
 from copy import deepcopy
 import time
-from streetFittingFunctionalNumpy import recursiveFittingCounterNumpy, recursiveFittingNumpy
-from streetFittingFunctionalNumba import recursiveFittingCounterNumba, recursiveFittingNumba
+from streetFittingFunctionalNumpy import recursiveFittingNumpy
+from streetFittingFunctionalNumba import recursiveFittingNumba
 import numpy as np
+from calcIter import calcMinIterWrapper
+from collections import OrderedDict
+
+
 
 def prettyPrint2D(array2D: list[list]):
     """pretty print of a 2D array (nested list)
@@ -129,77 +133,9 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
         raise FileNotFoundError(f"{path}")
 
 
-def calcSpeedWrapper(conf: tuple) -> list:
-    """_summary_
-
-    Args:
-        conf (tuple): (startStreet (list): nested list with the layouts of the houses
-            houseRules (list): rules for a house, needs 2 constrains
-            neighborRules (list): rules for neighbors
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-            basicOrder (list): order the rules should be applied (first house, then neighbor).
-            start (int): start point of ther permutations
-            end (int): end point of the perutations
-            id (int): id)
-
-    Returns:
-        list: [solvetime, order]
-    """
-    return calcSpeed(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
 
 
-def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: int) -> list:
-    """goes permutations from start to end and returns the fastest order to solve the riddle
-
-    Args:
-        startStreet (list): nested list with the layouts of the houses
-        houseRules (list): rules for a house, needs 2 constrains
-        neighborRules (list): rules for neighbors
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-        basicOrder (list): order the rules should be applied (first house, then neighbor).
-        start (int): start point of ther permutations
-        end (int): end point of the perutations
-        id (int): id
-
-    Returns:
-        list: [solvetime, order]
-    """
-    minOrder = []
-    minIter = 27
-    iterations = end-start
-    alreadyCompleted = (iterations  * percentage) // 100
-    start +=  alreadyCompleted
-    i = alreadyCompleted
-    # todo
-    iCount = 400  # number of % prints
-    iMod = iterations // iCount
-    startStreet =  np.array([startStreet])
-    houseRules = np.array(houseRules)
-    neighborRules = np.array(neighborRules)
-    orders = itertools.islice(itertools.permutations(basicOrder), start, end)
-    t0 = time.process_time()
-    for order in orders:
-        counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), minIter)
-        # fitting.ruleOrder = order
-        # fitting.calculate()
-        if counter < minIter:
-            minIter = counter
-            minOrder = order
-            print(f"Process {id}: \t{minIter} \t\tOrder: {minOrder}")
-            try:
-                with open(os.path.join(".temp", str(minIter)+str(minOrder)), "w", encoding='utf-8') as file:
-                    file.write(str(minIter)+str(minOrder))
-            except:
-                print("error"+ str(minIter)+str(minOrder))
-
-        i += 1
-        if i % iMod == 0:
-            print(f"Process {id}: \t{100*i/iterations} %")  # {time.process_time()-t0}")
-    print(f"Process {id}: Done!")
-    return [minIter, minOrder]
-
-
-def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
+def rulesIterator(path: str, function, cores: int = 0, percentage: float = 0):
     """prints #cores fastest iterations (ordered)
 
     Args:
@@ -252,17 +188,31 @@ def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
                 args.append((startStreet, houseRules, neighborRules,
                             emptyVal, fitting.ruleOrder, start, end, i+1, percentage))#, minIter, lock))
 
-            # results = [calcSpeedWrapper(args[8])]
+            # results = [function(args[8])]
             # return
             pool = manager.Pool(cores)
             try:
-                results = pool.map(calcSpeedWrapper, args)
-            except Exception as e:
-                print(e)
-                os._exit(-1)
+                results = pool.map(function, args)
+            except KeyboardInterrupt:
+                pool.join()
 
-        results.sort(key=lambda x: x[0])
-        prettyPrint2D(results)
+        # results.sort(key=lambda x: x[0])
+        # prettyPrint2D(results)
+        finalResult = {}
+        for res in results:
+            for counterKey, (count, order) in res.items():
+                try:
+                    finalResult[counterKey][0] += count
+                except KeyError:
+                    finalResult[counterKey] = [count, order]
+        
+        sortedItems = sorted(finalResult.items())
+        finalResult = dict(sortedItems)
+        try:
+            with open(os.path.join(".temp", "distribution.json"), "w", encoding='utf-8') as file:
+                file.write(json.dumps(finalResult ,indent=4))
+        except:
+            print(finalResult)
 
     else:
         raise FileNotFoundError(f"{path}")
