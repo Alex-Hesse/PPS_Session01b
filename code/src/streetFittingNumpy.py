@@ -29,6 +29,8 @@ exampleVals = {
 
 
 class StreetFittingNumpy():
+    """Recursive fitting of rules into the street using numpy arrays
+    """
 
     def __init__(self, startStreet: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal: int=-1, ruleOrder=np.empty((0))):
         """Recursive fitting of rules into the street
@@ -51,7 +53,7 @@ class StreetFittingNumpy():
             self.ruleOrder = np.array(ruleOrder)
 
     @staticmethod
-    def houseFit(street: np.ndarray, houseRule: np.ndarray, emptyVal=-1) -> np.ndarray:
+    def houseFit(street: np.ndarray, houseRule: np.ndarray, emptyVal:int=-1) -> np.ndarray:
         """Apllies houseRule to the street and returns all valid 
         configurations of the street with the applied value
 
@@ -91,7 +93,7 @@ class StreetFittingNumpy():
         return np.array(resultingStreets)
 
     @staticmethod
-    def neighborFit(street: np.ndarray, neighborRule: np.ndarray, emptyVal=-1) -> np.ndarray:
+    def neighborFit(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int=-1) -> np.ndarray:
         """Apllies neighborRules to the street and returns all valid 
         configurations of the street with the applied value
 
@@ -141,7 +143,7 @@ class StreetFittingNumpy():
         return np.array(resultingStreets)
 
     def _recursiveFitting(self, streets: np.ndarray, iteration: int = 0):
-        """Applies house and Neigbor rules in ruleOrder to the street
+        """Applies house and Neigbore rules in ruleOrder to the street
 
         Args:
             streets (np.ndarray): np.ndarray of streets that should be checked

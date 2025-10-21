@@ -24,7 +24,9 @@ class CmdLineOptions(argparse.ArgumentParser):
                           action='store_true', default=False)
         self.add_argument("-pb", "--parallelBruteForce",
                           help="flag to use parallel brute force", action='store_true', default=False)
-        self.add_argument("-i", "--improveOrder", help="flag to search for best rule order",
+        self.add_argument("-i", "--iterPermutations", help="iterPermutations and count recursive calls",
+                          action='store_true', default=False)
+        self.add_argument("-io", "--improveOrder", help="flag to search for best rule order",
                           action='store_true', default=False)
         self.add_argument("-plt", "--plot", help="plots distribution",
                           action='store_true', default=False)

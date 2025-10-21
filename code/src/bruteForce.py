@@ -7,7 +7,7 @@ import math
 from copy import deepcopy
 import os
 
-
+# Enums
 class Nationalität(IntEnum):
     Brite = 0
     Schwede = 1
@@ -63,12 +63,18 @@ class Position(IntEnum):
     Mitte = 2
     Letzte = 0
 
+
 # erster anastz
-
-
 def checkStraße(straße: list) -> bool:
-    """straße : (( nat, farbe, getränk, zig, tier),(),(),(),())
+    """checked ob straße alle regeln befolgt oder nicht
+
+    Args:
+        straße (list): (( nat, farbe, getränk, zig, tier),(...),(....),(...),(...))
+
+    Returns:
+        bool: true wenn alle regeln befolgt sind
     """
+
     for hausnummer in range(len(straße)):
         haus = straße[hausnummer]
 
@@ -170,22 +176,29 @@ def bruteForce() -> list:
 
 
 def brutForcePermutationen(permutationen: list, ergebnisse: list = []):
+    """recursivly brutforces over all perutations and prints results during runtime
 
+    Args:
+        permutationen (list): list of permutations
+        ergebnisse (list, optional): ergebnisse. Defaults to [].
+    """
     if len(permutationen) != 0:
         jetzigePermutation = permutationen.pop(0)
 
         for perm in jetzigePermutation:
-
-            brutForcePermutationen(
-                deepcopy(permutationen), ergebnisse + [perm])
+            brutForcePermutationen(deepcopy(permutationen), ergebnisse + [perm])
     else:
         straße = list(np.transpose(ergebnisse))
         if checkStraße(straße):
-            # richtigeStraßen.append(list(straße))
             prettyPrint(straße)
 
 
 def parallelBruteForce(cores: int = 8):
+    """splits bruteforce over cores processes
+
+    Args:
+        cores (int, optional): how many processes can be started. Defaults to 8.
+    """
     nationalitätenPermutationen = list(itertools.permutations(Nationalität))
 
     teilung = math.ceil(len(nationalitätenPermutationen) / cores)
@@ -195,20 +208,16 @@ def parallelBruteForce(cores: int = 8):
     args = [[deepcopy(nationalitätenPermutationen)[x: x + teilung]] +
             permutationen for x in range(0, len(nationalitätenPermutationen), teilung)]
 
-    # brutForcePermutationen(args[0])
+    
     with multiprocessing.Manager() as manager:
         pool = manager.Pool(cores)
         try:
-            results = pool.map(brutForcePermutationen, args)
+            pool.map(brutForcePermutationen, args)
         except KeyboardInterrupt:
-            # FIXME doesnt work child blocks interrupt
             pool.terminate()
-            pool.join()
         finally:
-            pool.join()
             pool.close()
             os._exit(1)
-    # print(results)
 
 
 def prettyPrint(straße: list):
@@ -224,6 +233,8 @@ def prettyPrint(straße: list):
 
 
 def evaluateBruteForce():
+    """bruteforces the riddle and prints found solutions
+    """
     richtigeStraßen = bruteForce()  # ~ 48h (ungetested)
     for straße in richtigeStraßen:
         prettyPrint(straße)

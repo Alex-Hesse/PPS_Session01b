@@ -6,27 +6,29 @@ from streetFittingFunctionalNumba import recursiveFittingCounterNumba
 import numpy as np
 import math
 
-def calcIterWrapper(conf: tuple) -> list:
-    """_summary_
+def calcIterWrapper(conf: tuple) -> dict:
+    """wrapper for calcIter
 
     Args:
-        conf (tuple): (startStreet (list): nested list with the layouts of the houses
+    conf (tuple): (
+            startStreet (list): nested list with the layouts of the houses
             houseRules (list): rules for a house, needs 2 constrains
             neighborRules (list): rules for neighbors
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
             basicOrder (list): order the rules should be applied (first house, then neighbor).
             start (int): start point of ther permutations
             end (int): end point of the perutations
-            id (int): id)
+            id (int): id
+            percentage (float): percentage to start from)
 
     Returns:
-        list: [solvetime, order]
+        dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
     """
     return calcIter(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
 
 
-def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> list:
-    """goes permutations from start to end and returns the fastest order to solve the riddle
+def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> dict:
+    """goes permutations from start to end and returns dict of total recursive calls and how often they happen with one example value
 
     Args:
         startStreet (list): nested list with the layouts of the houses
@@ -37,16 +39,15 @@ def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal,
         start (int): start point of ther permutations
         end (int): end point of the perutations
         id (int): id
+        percentage (float): percentage to start from
 
     Returns:
-        list: [solvetime, order]
+        dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
     """
-    minOrder = []
     iterations = end-start
     alreadyCompleted = math.ceil((iterations  * percentage) / 100)
     start +=  alreadyCompleted
     i = alreadyCompleted
-    # todo
     iCount = 400  # number of % prints
     iMod = iterations // iCount
     startStreet =  np.array([startStreet])
@@ -70,18 +71,21 @@ def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal,
     print(f"Process {id}: Done!")
     return counterDict
 
+
 def calcMinIterWrapper(conf: tuple) -> list:
-    """_summary_
+    """wrapper for calcMinIter
 
     Args:
-        conf (tuple): (startStreet (list): nested list with the layouts of the houses
+        conf (tuple): (
+            startStreet (list): nested list with the layouts of the houses
             houseRules (list): rules for a house, needs 2 constrains
             neighborRules (list): rules for neighbors
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
             basicOrder (list): order the rules should be applied (first house, then neighbor).
             start (int): start point of ther permutations
             end (int): end point of the perutations
-            id (int): id)
+            id (int): id
+            percentage (float): percentage to start from)
 
     Returns:
         list: [solvetime, order]
@@ -89,7 +93,7 @@ def calcMinIterWrapper(conf: tuple) -> list:
     return calcMinIter(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
 
 
-def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: int) -> list:
+def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> list:
     """goes permutations from start to end and returns the fastest order to solve the riddle
 
     Args:
@@ -101,6 +105,7 @@ def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyV
         start (int): start point of ther permutations
         end (int): end point of the perutations
         id (int): id
+        percentage (float): percentage to start from
 
     Returns:
         list: [solvetime, order]
@@ -108,10 +113,9 @@ def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyV
     minOrder = []
     minIter = 27
     iterations = end-start
-    alreadyCompleted = (iterations  * percentage) // 100
+    alreadyCompleted = math.ceil((iterations  * percentage) // 100)
     start +=  alreadyCompleted
     i = alreadyCompleted
-    # todo
     iCount = 400  # number of % prints
     iMod = iterations // iCount
     startStreet =  np.array([startStreet])
@@ -121,8 +125,6 @@ def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyV
     t0 = time.process_time()
     for order in orders:
         counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), minIter)
-        # fitting.ruleOrder = order
-        # fitting.calculate()
         if counter < minIter:
             minIter = counter
             minOrder = order

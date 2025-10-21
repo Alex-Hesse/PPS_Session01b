@@ -1,20 +1,16 @@
-from streetFitting import StreetFitting
-from streetFittingNumpy import StreetFittingNumpy
-from convertStrings2Integers import ConvertStrings2Integers
 import os
 import json
-from enum import Enum
 import multiprocessing
-import itertools
+import numpy as np
 import math
-from copy import deepcopy
 import time
+from enum import Enum
+from convertStrings2Integers import ConvertStrings2Integers
+from streetFittingNumpy import StreetFittingNumpy
+from streetFitting import StreetFitting
 from streetFittingFunctionalNumpy import recursiveFittingNumpy
 from streetFittingFunctionalNumba import recursiveFittingNumba
-import numpy as np
-from calcIter import calcMinIterWrapper
-from collections import OrderedDict
-
+import calcIter
 
 
 def prettyPrint2D(array2D: list[list]):
@@ -34,7 +30,7 @@ def prettyPrint2D(array2D: list[list]):
 
     print(text, end="")
 
-
+# used to acess json dict
 class JsonKeys(str, Enum):
     startStreet = "startStreet"
     houseRules = "houseRules"
@@ -42,7 +38,7 @@ class JsonKeys(str, Enum):
     ruleOrder = "ruleOrder"
     emptyVal = "emptyVal"
 
-
+# implementations to compare
 class SolverImplementations(str, Enum):
     classSolver = "class"
     classNumpySolver = "classNumpy"
@@ -51,14 +47,15 @@ class SolverImplementations(str, Enum):
 
 
 def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver):
-    """opens json file, runs the solver
+    """opens json file, runs the solver, times it
 
     Args:
         path (str): file path to the config file
-        useConverter (bool, optional): convert strings to integer. Defaults to True.
+        whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
 
     Raises:
         KeyError: json is missing a key
+        TypeError: invalid implmentation
         FileNotFoundError: json cant be found/opened
     """
     if os.path.isfile(path):
@@ -133,14 +130,13 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
         raise FileNotFoundError(f"{path}")
 
 
-
-
-def rulesIterator(path: str, function, cores: int = 0, percentage: float = 0):
+def rulesIterator(path: str, minIter: bool = False, cores: int = 0, percentage: float = 0):
     """prints #cores fastest iterations (ordered)
 
     Args:
         path (str): file path to the config file
-        cores (int, optional): how many proceses will be used. 0 == auto. Defaults to 0.
+        minIter (bool, optional): if true searches for minimum iterations, otherwise it determins the distribution of recursion calls in all 12! permutations. Defaults to False. will be used. 0 == auto. Defaults to 0.
+        percentage (float): percentage to start from. Defaults to 0.
 
     Raises:
         KeyError: json is missing a key
@@ -172,6 +168,7 @@ def rulesIterator(path: str, function, cores: int = 0, percentage: float = 0):
         chunkSize = math.factorial(len(fitting.ruleOrder)) // cores
         
         with multiprocessing.Manager() as manager:
+            # ! slowed down to much
             # minIter = manager.Value('i', 1e10)
             # lock = manager.Lock()
 
@@ -192,27 +189,32 @@ def rulesIterator(path: str, function, cores: int = 0, percentage: float = 0):
             # return
             pool = manager.Pool(cores)
             try:
-                results = pool.map(function, args)
+                if minIter:
+                    results = pool.map(calcIter.calcMinIterWrapper, args)
+                else:
+                    results = pool.map(calcIter.calcIterWrapper, args)
             except KeyboardInterrupt:
                 pool.join()
 
-        # results.sort(key=lambda x: x[0])
-        # prettyPrint2D(results)
-        finalResult = {}
-        for res in results:
-            for counterKey, (count, order) in res.items():
-                try:
-                    finalResult[counterKey][0] += count
-                except KeyError:
-                    finalResult[counterKey] = [count, order]
-        
-        sortedItems = sorted(finalResult.items())
-        finalResult = dict(sortedItems)
-        try:
-            with open(os.path.join(".temp", "distribution.json"), "w", encoding='utf-8') as file:
-                file.write(json.dumps(finalResult ,indent=4))
-        except:
-            print(finalResult)
+        if minIter:
+            results.sort(key=lambda x: x[0])
+            prettyPrint2D(results)
+        else:
+            finalResult = {}
+            for res in results:
+                for counterKey, (count, order) in res.items():
+                    try:
+                        finalResult[counterKey][0] += count
+                    except KeyError:
+                        finalResult[counterKey] = [count, order]
+            
+            sortedItems = sorted(finalResult.items())
+            finalResult = dict(sortedItems)
+            try:
+                with open(os.path.join(".temp", "distribution.json"), "w", encoding='utf-8') as file:
+                    file.write(json.dumps(finalResult ,indent=4))
+            except:
+                print(finalResult)
 
     else:
         raise FileNotFoundError(f"{path}")

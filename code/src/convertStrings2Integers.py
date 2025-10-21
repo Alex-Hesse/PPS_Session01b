@@ -2,6 +2,8 @@ from copy import deepcopy
 
 
 class ConvertStrings2Integers():
+    """Class to convert strings to integers and back, to avoid string comparison.
+    """
     _instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -25,6 +27,17 @@ class ConvertStrings2Integers():
             self.str2int(string)
 
     def obj2int(self, obj):
+        """convert nested lists of strings to nested lists of integers
+
+        Args:
+            obj (list): works only with lists so far
+
+        Raises:
+            TypeError:  expect nested obj containing strings
+
+        Returns:
+            any: object now containing integers
+        """
 
         if type(obj) == str:
             obj = self.str2int(obj)
@@ -42,6 +55,17 @@ class ConvertStrings2Integers():
         return obj
 
     def obj2str(self, obj):
+        """convert nested lists of integerss to nested lists of strings
+
+        Args:
+            obj (list): works only with lists so far
+
+        Raises:
+            TypeError:  expect nested obj containing integers
+
+        Returns:
+            any: object now containing strings
+        """
 
         if type(obj) == int:
             obj = self.int2str(obj)
@@ -55,7 +79,7 @@ class ConvertStrings2Integers():
                         obj[i] = self.obj2str(obj[i])
                     except TypeError:
                         raise TypeError(
-                            "ConvertStrings2Ints: obj2istr: expect nested obj containing integers")
+                            "ConvertStrings2Ints: obj2str: expect nested obj containing integers")
         return obj
 
     def int2str(self, integer: int) -> str:

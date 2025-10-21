@@ -60,7 +60,7 @@ class StreetFitting():
         Args:
             street (list): the street the houserule should be apllied with
             houseRule (list): rule for a house, needs 2 constrains
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+            emptyVal (any, optional): the value a empty slot has. Defaults to -1.
 
         Returns:
             list: list of possible streets
@@ -98,7 +98,7 @@ class StreetFitting():
         Args:
             street (list): the street the houserule should be apllied with
             neighborRule (list): rule for neighbor first part is right neigbor seconde one is the left
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+            emptyVal (any, optional): the value a empty slot has. Defaults to -1.
 
         Returns:
             list: list of possible streets
@@ -134,7 +134,7 @@ class StreetFitting():
         return resultingStreets
 
     def _recursiveFitting(self, streets: list, iteration: int = 0):
-        """Applies house and Neigbor rules in ruleOrder to the street
+        """Applies house and Neigbore rules in ruleOrder to the street
 
         Args:
             streets (list): list of streets that should be checked

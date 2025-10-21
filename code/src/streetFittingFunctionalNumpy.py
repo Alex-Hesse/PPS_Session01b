@@ -121,6 +121,21 @@ def neighborFitNumpy(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int)
 
 def _recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
                       iteration: int, counter:int, minCounter: int) -> int:
+    """"Applies house and Neigbore rules in ruleOrder to the street recursively
+
+    Args:
+        streets (np.ndarray): _description_
+        houseRules (np.ndarray): rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): _description_
+        emptyVal (int): _description_
+        ruleOrder (np.ndarray): _description_
+        iteration (int): _description_
+        counter (int): _description_
+        minCounter (int): _description_
+
+    Returns:
+        int: _description_
+    """
     counter += 1
     if counter > minCounter:
         return counter
@@ -151,8 +166,7 @@ def recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, ne
     return _recursiveFittingCounterNumpy(streets, houseRules, neighborRules, emptyVal, ruleOrder, 0, 0, minCounter)
 
 
-def _recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
-                      iteration: int, result: np.ndarray) -> np.ndarray:
+def _recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, iteration: int, result: np.ndarray) -> np.ndarray:
     
     if iteration < len(ruleOrder):
         ruleIndex = ruleOrder[iteration]

@@ -2,7 +2,7 @@ from cmdLineOptions import CmdLineOptions
 import configs
 import bruteForce
 import os
-import calcIter
+
 from plotDistribution import plotDistribution
 
 def main():
@@ -13,13 +13,16 @@ def main():
 
     args = cmd.parse_args()
 
+    # choose what mode
     if args.bruteForce or args.parallelBruteForce or args.improveOrder or args.plot:
         if args.bruteForce:
             bruteForce.evaluateBruteForce()
         if args.parallelBruteForce:
             bruteForce.parallelBruteForce(os.cpu_count())
         if args.improveOrder:
-            configs.rulesIterator(args.rulesFile, calcIter.calcIterWrapper, 12, 0)
+            configs.rulesIterator(args.rulesFile, True, percentage=0)
+        if args.iterPermutations:
+             configs.rulesIterator(args.rulesFile, False, percentage=0)
         if args.plot:
             plotDistribution()
     else:

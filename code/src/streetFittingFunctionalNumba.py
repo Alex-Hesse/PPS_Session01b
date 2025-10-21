@@ -126,8 +126,7 @@ def neighborFitNumba(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int)
     return resultingStreets
 
 @njit
-def _recursiveFittingCounterNumba(streets: List, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
-                      iteration: int, counter = List) -> List:
+def _recursiveFittingCounterNumba(streets: List, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, iteration: int, counter = List) -> List:
     # using list to attempt to speed up to the original function code
     counter[0] += 1
     if counter[0] > counter[1]:
@@ -189,6 +188,7 @@ def recursiveFittingNumba(streets: np.ndarray, houseRules: np.ndarray, neighborR
     result = _recursiveFittingNumba(List(streets), houseRules, neighborRules, emptyVal, ruleOrder, 0, List.empty_list(STREET_TYPE))
     return result
 
+
 def compileNumba():
     """doesnt work"""
     street = np.full((5,5), 0)
@@ -203,6 +203,7 @@ def compileNumba():
     #neighborFitNumba(street, neighborRule, 0)
     recursiveFittingCounterNumba(streets, houseRules, neighborRules, 0, ruleOrder, 5)
     recursiveFittingNumba(streets, houseRules, neighborRules, 0, ruleOrder)
+
 
 if __name__ == "__main__":
     from convertStrings2Integers import ConvertStrings2Integers

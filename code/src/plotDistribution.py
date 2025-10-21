@@ -3,6 +3,8 @@ import json
 import os
 
 def plotDistribution():
+    """plots the distribution of recur
+    """
     with open(os.path.join(".","resources","distribution.json"), "r") as file:
         data = json.load(file)
 
@@ -19,7 +21,7 @@ def plotDistribution():
     # Add labels and a legend for clarity
     plt.xlabel('Number of Recursive Calls')
     plt.ylabel('Total Occurrences')
-    plt.title('Distribution of Recursion Depth Across All 12! Permutations')
+    plt.title('Distribution of Recursion Calls Across All 12! Permutations')
     plt.grid(True)
     plt.tight_layout()
     print("Sadly I cut off at 10,000 recursive calls...\nBut it run 14.25h so I'm not doing it again for the ~1000 cut of results.")
