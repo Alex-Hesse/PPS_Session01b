@@ -1,0 +1,25 @@
+src
+===
+
+.. py:module:: src
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/src/bruteForce/index
+   /autoapi/src/calcIter/index
+   /autoapi/src/cmdLineOptions/index
+   /autoapi/src/configs/index
+   /autoapi/src/convertStrings2Integers/index
+   /autoapi/src/main/index
+   /autoapi/src/plotDistribution/index
+   /autoapi/src/streetFitting/index
+   /autoapi/src/streetFittingFunctionalNumba/index
+   /autoapi/src/streetFittingFunctionalNumpy/index
+   /autoapi/src/streetFittingNumpy/index
+
+

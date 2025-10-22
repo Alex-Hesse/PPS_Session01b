@@ -1,0 +1,124 @@
+src.streetFittingNumpy
+======================
+
+.. py:module:: src.streetFittingNumpy
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.streetFittingNumpy.exampleVals
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.streetFittingNumpy.StreetFittingNumpy
+
+
+Module Contents
+---------------
+
+.. py:data:: exampleVals
+
+.. py:class:: StreetFittingNumpy(startStreet: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int = -1, ruleOrder=np.empty(0))
+
+   Recursive fitting of rules into the street using numpy arrays
+       
+
+
+   .. py:attribute:: startStreet
+
+
+   .. py:attribute:: houseRules
+
+
+   .. py:attribute:: neighborRules
+
+
+   .. py:attribute:: emptyVal
+      :value: -1
+
+
+
+   .. py:attribute:: _fittingStreets
+      :value: []
+
+
+
+   .. py:method:: houseFit(street: numpy.ndarray, houseRule: numpy.ndarray, emptyVal: int = -1) -> numpy.ndarray
+      :staticmethod:
+
+
+      Applies houseRule to the street and returns all valid 
+      configurations of the street with the applied value
+
+      Args:
+          street (np.ndarray): the street the house rule should be applied with
+          houseRule (np.ndarray): rule for a house, needs 2 constrains
+          emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+
+      Returns:
+          np.ndarray: np.ndarray of possible streets
+
+
+
+   .. py:method:: neighborFit(street: numpy.ndarray, neighborRule: numpy.ndarray, emptyVal: int = -1) -> numpy.ndarray
+      :staticmethod:
+
+
+      Applies neighborRules to the street and returns all valid 
+      configurations of the street with the applied value
+
+      Args:
+          street (np.ndarray): the street the house rule should be applied with
+          neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
+          emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+
+      Returns:
+          np.ndarray: np.ndarray of possible streets
+
+
+
+   .. py:method:: _recursiveFitting(streets: numpy.ndarray, iteration: int = 0)
+
+      Applies house and Neighbor rules in ruleOrder to the street
+
+      Args:
+          streets (np.ndarray): np.ndarray of streets that should be checked
+          iteration (int, optional): iteration counter. Defaults to 0.
+
+
+
+   .. py:method:: recursiveFitting(streets: numpy.ndarray) -> numpy.ndarray
+
+      starts the fitting algorithm with the given streets
+
+      Args:
+          street (np.ndarray): np.ndarray of allowed start configurations 
+
+      Returns:
+          np.ndarray: final streets with all rules applied
+
+
+
+   .. py:method:: calculate() -> numpy.ndarray
+
+      calculates results of start street and returns solutions
+
+      Returns:
+          np.ndarray: solutions
+
+
+
+   .. py:property:: fittingStreets
+
+      all the resulting streets of last Fitting call
+              
+
+
+

@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.bruteForce &mdash; PPS_Session01b 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="src.calcIter" href="../calcIter/index.html" />
+    <link rel="prev" title="src" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PPS_Session01b
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">src</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.bruteForce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../calcIter/index.html">src.calcIter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cmdLineOptions/index.html">src.cmdLineOptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../configs/index.html">src.configs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../convertStrings2Integers/index.html">src.convertStrings2Integers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../main/index.html">src.main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../plotDistribution/index.html">src.plotDistribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../streetFitting/index.html">src.streetFitting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../streetFittingFunctionalNumba/index.html">src.streetFittingFunctionalNumba</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../streetFittingFunctionalNumpy/index.html">src.streetFittingFunctionalNumpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../streetFittingNumpy/index.html">src.streetFittingNumpy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PPS_Session01b</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">src</a></li>
+      <li class="breadcrumb-item active">src.bruteForce</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/src/bruteForce/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-src.bruteForce">
+<span id="src-bruteforce"></span><h1>src.bruteForce<a class="headerlink" href="#module-src.bruteForce" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.Nationalitat" title="src.bruteForce.Nationalität"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nationalität</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.Farbe" title="src.bruteForce.Farbe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Farbe</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.Getrank" title="src.bruteForce.Getränk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Getränk</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.Zigarettenmarke" title="src.bruteForce.Zigarettenmarke"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Zigarettenmarke</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.Hausttier" title="src.bruteForce.Hausttier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hausttier</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.Idx" title="src.bruteForce.Idx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Idx</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.Position" title="src.bruteForce.Position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Position</span></code></a></p></td>
+<td><p>Enum where members are also (and must be) ints</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.checkStrasze" title="src.bruteForce.checkStraße"><code class="xref py py-obj docutils literal notranslate"><span class="pre">checkStraße</span></code></a>(→ bool)</p></td>
+<td><p>checked ob straße alle regeln befolgt oder nicht</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.bruteForce" title="src.bruteForce.bruteForce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bruteForce</span></code></a>(→ list)</p></td>
+<td><p>brute force methode, nicht zu gebrauchen dauert vermutlich 142h</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.brutForcePermutationen" title="src.bruteForce.brutForcePermutationen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">brutForcePermutationen</span></code></a>(permutationen[, ergebnisse])</p></td>
+<td><p>recursivly brutforces over all perutations and prints results during runtime</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.parallelBruteForce" title="src.bruteForce.parallelBruteForce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallelBruteForce</span></code></a>([cores])</p></td>
+<td><p>splits bruteforce over cores processes</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#src.bruteForce.prettyPrint" title="src.bruteForce.prettyPrint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prettyPrint</span></code></a>(straße)</p></td>
+<td><p>Pretty print für straße</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.bruteForce.evaluateBruteForce" title="src.bruteForce.evaluateBruteForce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">evaluateBruteForce</span></code></a>()</p></td>
+<td><p>bruteforces the riddle and prints found solutions</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Nationalität</span></span><a class="headerlink" href="#src.bruteForce.Nationalitat" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat.Brite">
+<span class="sig-name descname"><span class="pre">Brite</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Nationalitat.Brite" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat.Schwede">
+<span class="sig-name descname"><span class="pre">Schwede</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Nationalitat.Schwede" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat.Dane">
+<span class="sig-name descname"><span class="pre">Däne</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Nationalitat.Dane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat.Deutsche">
+<span class="sig-name descname"><span class="pre">Deutsche</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Nationalitat.Deutsche" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Nationalitat.Norweger">
+<span class="sig-name descname"><span class="pre">Norweger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Nationalitat.Norweger" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Farbe</span></span><a class="headerlink" href="#src.bruteForce.Farbe" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe.Rot">
+<span class="sig-name descname"><span class="pre">Rot</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Farbe.Rot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe.Grun">
+<span class="sig-name descname"><span class="pre">Grün</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Farbe.Grun" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe.Gelb">
+<span class="sig-name descname"><span class="pre">Gelb</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Farbe.Gelb" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe.Blau">
+<span class="sig-name descname"><span class="pre">Blau</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Farbe.Blau" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Farbe.Weisz">
+<span class="sig-name descname"><span class="pre">Weiß</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Farbe.Weisz" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Getränk</span></span><a class="headerlink" href="#src.bruteForce.Getrank" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank.Tee">
+<span class="sig-name descname"><span class="pre">Tee</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Getrank.Tee" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank.Kaffee">
+<span class="sig-name descname"><span class="pre">Kaffee</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Getrank.Kaffee" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank.Bier">
+<span class="sig-name descname"><span class="pre">Bier</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Getrank.Bier" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank.Milch">
+<span class="sig-name descname"><span class="pre">Milch</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Getrank.Milch" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Getrank.Wasser">
+<span class="sig-name descname"><span class="pre">Wasser</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Getrank.Wasser" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Zigarettenmarke</span></span><a class="headerlink" href="#src.bruteForce.Zigarettenmarke" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke.Rothmanns">
+<span class="sig-name descname"><span class="pre">Rothmanns</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Zigarettenmarke.Rothmanns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke.Winfield">
+<span class="sig-name descname"><span class="pre">Winfield</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Zigarettenmarke.Winfield" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke.Dunhill">
+<span class="sig-name descname"><span class="pre">Dunhill</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Zigarettenmarke.Dunhill" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke.Pall_Mall">
+<span class="sig-name descname"><span class="pre">Pall_Mall</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Zigarettenmarke.Pall_Mall" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Zigarettenmarke.Marlboro">
+<span class="sig-name descname"><span class="pre">Marlboro</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Zigarettenmarke.Marlboro" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Hausttier</span></span><a class="headerlink" href="#src.bruteForce.Hausttier" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier.Hund">
+<span class="sig-name descname"><span class="pre">Hund</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Hausttier.Hund" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier.Vogel">
+<span class="sig-name descname"><span class="pre">Vogel</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Hausttier.Vogel" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier.Katze">
+<span class="sig-name descname"><span class="pre">Katze</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Hausttier.Katze" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier.Pferd">
+<span class="sig-name descname"><span class="pre">Pferd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Hausttier.Pferd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Hausttier.Fisch">
+<span class="sig-name descname"><span class="pre">Fisch</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Hausttier.Fisch" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Idx">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Idx</span></span><a class="headerlink" href="#src.bruteForce.Idx" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Idx.Nationalitat">
+<span class="sig-name descname"><span class="pre">Nationalität</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Idx.Nationalitat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Idx.Farbe">
+<span class="sig-name descname"><span class="pre">Farbe</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Idx.Farbe" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Idx.Getrank">
+<span class="sig-name descname"><span class="pre">Getränk</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Idx.Getrank" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Idx.Zigarettenmarke">
+<span class="sig-name descname"><span class="pre">Zigarettenmarke</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#src.bruteForce.Idx.Zigarettenmarke" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Idx.Hausttier">
+<span class="sig-name descname"><span class="pre">Hausttier</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Idx.Hausttier" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.bruteForce.Position">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">Position</span></span><a class="headerlink" href="#src.bruteForce.Position" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Enum where members are also (and must be) ints</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Position.Links">
+<span class="sig-name descname"><span class="pre">Links</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#src.bruteForce.Position.Links" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Position.Erste">
+<span class="sig-name descname"><span class="pre">Erste</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.bruteForce.Position.Erste" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Position.Rechts">
+<span class="sig-name descname"><span class="pre">Rechts</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.bruteForce.Position.Rechts" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Position.Mitte">
+<span class="sig-name descname"><span class="pre">Mitte</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.bruteForce.Position.Mitte" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.bruteForce.Position.Letzte">
+<span class="sig-name descname"><span class="pre">Letzte</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.bruteForce.Position.Letzte" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.checkStrasze">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">checkStraße</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">straße</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#src.bruteForce.checkStrasze" title="Link to this definition"></a></dt>
+<dd><p>checked ob straße alle regeln befolgt oder nicht</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>straße (list): (( nat, farbe, getränk, zig, tier),(…),(….),(…),(…))</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: true wenn alle regeln befolgt sind</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.bruteForce">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">bruteForce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#src.bruteForce.bruteForce" title="Link to this definition"></a></dt>
+<dd><p>brute force methode, nicht zu gebrauchen dauert vermutlich 142h</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.brutForcePermutationen">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">brutForcePermutationen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permutationen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ergebnisse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.bruteForce.brutForcePermutationen" title="Link to this definition"></a></dt>
+<dd><p>recursivly brutforces over all perutations and prints results during runtime</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>permutationen (list): list of permutations
+ergebnisse (list, optional): ergebnisse. Defaults to [].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.parallelBruteForce">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">parallelBruteForce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cores</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.bruteForce.parallelBruteForce" title="Link to this definition"></a></dt>
+<dd><p>splits bruteforce over cores processes</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>cores (int, optional): how many processes can be started. Defaults to 8.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.prettyPrint">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">prettyPrint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">straße</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.bruteForce.prettyPrint" title="Link to this definition"></a></dt>
+<dd><p>Pretty print für straße</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.bruteForce.evaluateBruteForce">
+<span class="sig-prename descclassname"><span class="pre">src.bruteForce.</span></span><span class="sig-name descname"><span class="pre">evaluateBruteForce</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.bruteForce.evaluateBruteForce" title="Link to this definition"></a></dt>
+<dd><p>bruteforces the riddle and prints found solutions</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../calcIter/index.html" class="btn btn-neutral float-right" title="src.calcIter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Alexander Hesse.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

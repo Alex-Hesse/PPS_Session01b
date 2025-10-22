@@ -1,11 +1,14 @@
 # PPS_Session01b
 
 ## Overview
+
 Lösung für das Rätsel von Albert Einstein in Python
 
 
 ## References
-moodle [here]()
+
+moodle [here](https://moodle.thi.de/course/view.php?id=7742)
+api [here](./docu/build/index.html)
 
 
 ## Installation

@@ -1,0 +1,33 @@
+src.main
+========
+
+.. py:module:: src.main
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.main.t0
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.main.main
+
+
+Module Contents
+---------------
+
+.. py:function:: main()
+
+   main function
+       
+
+
+.. py:data:: t0
+

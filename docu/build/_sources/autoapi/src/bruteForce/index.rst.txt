@@ -1,0 +1,313 @@
+src.bruteForce
+==============
+
+.. py:module:: src.bruteForce
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.bruteForce.Nationalität
+   src.bruteForce.Farbe
+   src.bruteForce.Getränk
+   src.bruteForce.Zigarettenmarke
+   src.bruteForce.Hausttier
+   src.bruteForce.Idx
+   src.bruteForce.Position
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.bruteForce.checkStraße
+   src.bruteForce.bruteForce
+   src.bruteForce.brutForcePermutationen
+   src.bruteForce.parallelBruteForce
+   src.bruteForce.prettyPrint
+   src.bruteForce.evaluateBruteForce
+
+
+Module Contents
+---------------
+
+.. py:class:: Nationalität
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Brite
+      :value: 0
+
+
+
+   .. py:attribute:: Schwede
+      :value: 1
+
+
+
+   .. py:attribute:: Däne
+      :value: 2
+
+
+
+   .. py:attribute:: Deutsche
+      :value: 3
+
+
+
+   .. py:attribute:: Norweger
+      :value: 4
+
+
+
+.. py:class:: Farbe
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Rot
+      :value: 0
+
+
+
+   .. py:attribute:: Grün
+      :value: 1
+
+
+
+   .. py:attribute:: Gelb
+      :value: 2
+
+
+
+   .. py:attribute:: Blau
+      :value: 3
+
+
+
+   .. py:attribute:: Weiß
+      :value: 4
+
+
+
+.. py:class:: Getränk
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Tee
+      :value: 0
+
+
+
+   .. py:attribute:: Kaffee
+      :value: 1
+
+
+
+   .. py:attribute:: Bier
+      :value: 2
+
+
+
+   .. py:attribute:: Milch
+      :value: 3
+
+
+
+   .. py:attribute:: Wasser
+      :value: 4
+
+
+
+.. py:class:: Zigarettenmarke
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Rothmanns
+      :value: 0
+
+
+
+   .. py:attribute:: Winfield
+      :value: 1
+
+
+
+   .. py:attribute:: Dunhill
+      :value: 2
+
+
+
+   .. py:attribute:: Pall_Mall
+      :value: 3
+
+
+
+   .. py:attribute:: Marlboro
+      :value: 4
+
+
+
+.. py:class:: Hausttier
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Hund
+      :value: 0
+
+
+
+   .. py:attribute:: Vogel
+      :value: 1
+
+
+
+   .. py:attribute:: Katze
+      :value: 2
+
+
+
+   .. py:attribute:: Pferd
+      :value: 3
+
+
+
+   .. py:attribute:: Fisch
+      :value: 4
+
+
+
+.. py:class:: Idx
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Nationalität
+      :value: 0
+
+
+
+   .. py:attribute:: Farbe
+      :value: 1
+
+
+
+   .. py:attribute:: Getränk
+      :value: 2
+
+
+
+   .. py:attribute:: Zigarettenmarke
+      :value: 3
+
+
+
+   .. py:attribute:: Hausttier
+      :value: 4
+
+
+
+.. py:class:: Position
+
+   Bases: :py:obj:`enum.IntEnum`
+
+
+   Enum where members are also (and must be) ints
+
+
+   .. py:attribute:: Links
+      :value: -1
+
+
+
+   .. py:attribute:: Erste
+      :value: 4
+
+
+
+   .. py:attribute:: Rechts
+      :value: 1
+
+
+
+   .. py:attribute:: Mitte
+      :value: 2
+
+
+
+   .. py:attribute:: Letzte
+      :value: 0
+
+
+
+.. py:function:: checkStraße(straße: list) -> bool
+
+   checked ob straße alle regeln befolgt oder nicht
+
+   Args:
+       straße (list): (( nat, farbe, getränk, zig, tier),(...),(....),(...),(...))
+
+   Returns:
+       bool: true wenn alle regeln befolgt sind
+
+
+.. py:function:: bruteForce() -> list
+
+   brute force methode, nicht zu gebrauchen dauert vermutlich 142h
+       
+
+
+.. py:function:: brutForcePermutationen(permutationen: list, ergebnisse: list = [])
+
+   recursivly brutforces over all perutations and prints results during runtime
+
+   Args:
+       permutationen (list): list of permutations
+       ergebnisse (list, optional): ergebnisse. Defaults to [].
+
+
+.. py:function:: parallelBruteForce(cores: int = 8)
+
+   splits bruteforce over cores processes
+
+   Args:
+       cores (int, optional): how many processes can be started. Defaults to 8.
+
+
+.. py:function:: prettyPrint(straße: list)
+
+   Pretty print für straße
+       
+
+
+.. py:function:: evaluateBruteForce()
+
+   bruteforces the riddle and prints found solutions
+       
+
+

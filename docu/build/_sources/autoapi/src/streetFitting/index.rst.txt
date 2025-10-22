@@ -1,0 +1,120 @@
+src.streetFitting
+=================
+
+.. py:module:: src.streetFitting
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.streetFitting.exampleVals
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.streetFitting.StreetFitting
+
+
+Module Contents
+---------------
+
+.. py:data:: exampleVals
+
+.. py:class:: StreetFitting(startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[])
+
+   .. py:attribute:: startStreet
+
+
+   .. py:attribute:: houseRules
+
+
+   .. py:attribute:: neighborRules
+
+
+   .. py:attribute:: emptyVal
+      :value: -1
+
+
+
+   .. py:attribute:: _fittingStreets
+      :value: []
+
+
+
+   .. py:method:: houseFit(street: list, houseRule: list, emptyVal=-1) -> list
+      :staticmethod:
+
+
+      Applies houseRule to the street and returns all valid 
+      configurations of the street with the applied value
+
+      Args:
+          street (list): the street the house rule should be applied with
+          houseRule (list): rule for a house, needs 2 constrains
+          emptyVal (any, optional): the value a empty slot has. Defaults to -1.
+
+      Returns:
+          list: list of possible streets
+
+
+
+   .. py:method:: neighborFit(street: list, neighborRule: list, emptyVal=-1) -> list
+      :staticmethod:
+
+
+      Applies neighborRules to the street and returns all valid 
+      configurations of the street with the applied value
+
+      Args:
+          street (list): the street the house rule should be applied with
+          neighborRule (list): rule for neighbor first part is right neighbor seconde one is the left
+          emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+
+      Returns:
+          list: list of possible streets
+
+
+
+   .. py:method:: _recursiveFitting(streets: list, iteration: int = 0)
+
+      Applies house and Neighbor rules in ruleOrder to the street
+
+      Args:
+          streets (list): list of streets that should be checked
+          iteration (int, optional): iteration counter. Defaults to 0.
+
+
+
+   .. py:method:: recursiveFitting(streets: list) -> list
+
+      starts the fitting algorithm with the given streets
+
+      Args:
+          street (list): list of allowed start configurations 
+
+      Returns:
+          list: final streets with all rules applied
+
+
+
+   .. py:method:: calculate() -> list
+
+      calculates results of start street and returns solutions
+
+      Returns:
+          list: solutions
+
+
+
+   .. py:property:: fittingStreets
+
+      all the resulting streets of last Fitting call
+              
+
+
+

@@ -1,0 +1,23 @@
+src.plotDistribution
+====================
+
+.. py:module:: src.plotDistribution
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.plotDistribution.plotDistribution
+
+
+Module Contents
+---------------
+
+.. py:function:: plotDistribution()
+
+   plots the distribution of recur
+       
+
+

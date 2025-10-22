@@ -1,0 +1,140 @@
+src.streetFittingFunctionalNumba
+================================
+
+.. py:module:: src.streetFittingFunctionalNumba
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.streetFittingFunctionalNumba.STREET_TYPE
+   src.streetFittingFunctionalNumba.exampleVals
+   src.streetFittingFunctionalNumba.conv
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.streetFittingFunctionalNumba.houseFitNumba
+   src.streetFittingFunctionalNumba.neighborFitNumba
+   src.streetFittingFunctionalNumba._recursiveFittingCounterNumba
+   src.streetFittingFunctionalNumba.recursiveFittingCounterNumba
+   src.streetFittingFunctionalNumba._recursiveFittingNumba
+   src.streetFittingFunctionalNumba.recursiveFittingNumba
+   src.streetFittingFunctionalNumba.compileNumba
+
+
+Module Contents
+---------------
+
+.. py:data:: STREET_TYPE
+
+.. py:data:: exampleVals
+
+.. py:function:: houseFitNumba(street: numpy.ndarray, houseRule: numpy.ndarray, emptyVal: int) -> numba.typed.List
+
+   Applies houseRule to the street and returns all valid 
+   configurations of the street with the applied value
+
+   Args:
+       street (np.ndarray): the street the house rule should be applied with
+       houseRule (np.ndarray): rule for a house, needs 2 constrains
+       emptyVal (int): the value a empty slot has
+
+   Returns:
+       np.ndarray: array of possible streets
+
+
+.. py:function:: neighborFitNumba(street: numpy.ndarray, neighborRule: numpy.ndarray, emptyVal: int) -> numba.typed.List
+
+   Applies neighborRules to the street and returns all valid 
+   configurations of the street with the applied value
+
+   Args:
+       street (np.ndarray): the street the house rule should be applied with
+       neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
+       emptyVal (int): the value a empty slot has
+
+   Returns:
+       np.ndarray: array of possible streets
+
+
+.. py:function:: _recursiveFittingCounterNumba(streets: numba.typed.List, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, iteration: int, counter=List) -> numba.typed.List
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       iteration (int): iteration counter
+       counter (int): call counter
+       minCounter (int): call counter cutoff
+
+   Returns:
+       int: total calls
+
+
+.. py:function:: recursiveFittingCounterNumba(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, minCounter: int) -> int
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       counter (int): call counter
+       minCounter (int): call counter cutoff
+
+   Returns:
+       int: total calls
+
+
+.. py:function:: _recursiveFittingNumba(streets: numba.typed.List, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, iteration: int, result=List) -> numba.typed.List
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       iteration (int): iteration counter
+       result (np.ndarray): array of solutions
+
+   Returns:
+       np.ndarray: array of solutions
+
+
+.. py:function:: recursiveFittingNumba(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray) -> numba.typed.List
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       result (np.ndarray): array of solutions
+
+   Returns:
+       np.ndarray: array of solutions
+
+
+.. py:function:: compileNumba()
+
+   doesn't work
+
+
+.. py:data:: conv
+

@@ -1,0 +1,85 @@
+src.convertStrings2Integers
+===========================
+
+.. py:module:: src.convertStrings2Integers
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.convertStrings2Integers.ConvertStrings2Integers
+
+
+Module Contents
+---------------
+
+.. py:class:: ConvertStrings2Integers(strings: list[str] = [])
+
+   Class to convert strings to integers and back, to avoid string comparison.
+       
+
+
+   .. py:attribute:: _instance
+      :value: None
+
+
+
+   .. py:method:: obj2int(obj)
+
+      convert nested lists of strings to nested lists of integers
+
+      Args:
+          obj (list): works only with lists so far
+
+      Raises:
+          TypeError:  expect nested obj containing strings
+
+      Returns:
+          any: object now containing integers
+
+
+
+   .. py:method:: obj2str(obj)
+
+      convert nested lists of integerss to nested lists of strings
+
+      Args:
+          obj (list): works only with lists so far
+
+      Raises:
+          TypeError:  expect nested obj containing integers
+
+      Returns:
+          any: object now containing strings
+
+
+
+   .. py:method:: int2str(integer: int) -> str
+
+      converts integer back to the original string
+
+      Args:
+          integer (int): integer which has been created
+
+      Raises:
+          KeyError: if integer doesn't belong to any string
+
+      Returns:
+          str: original string
+
+
+
+   .. py:method:: str2int(string: str) -> int
+
+      converts string to integer
+
+      Args:
+          string (str): any string
+
+      Returns:
+          int: corresponding integer
+
+
+

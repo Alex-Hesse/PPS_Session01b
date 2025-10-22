@@ -1,0 +1,41 @@
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
+
+# -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
+project = 'PPS_Session01b'
+copyright = '2025, Alexander Hesse'
+author = 'Alexander Hesse'
+release = '0.1'
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+extensions = []
+
+templates_path = ['_templates']
+exclude_patterns = []
+
+
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+import os
+import sys
+# The absolute path to your project's root directory
+sys.path.insert(0, os.path.abspath('../../'))
+
+# List of extensions to enable
+extensions = [
+    'autoapi.extension',
+    'sphinx_rtd_theme'
+]
+
+
+# The theme to use for HTML and HTML Help pages
+html_theme = "sphinx_rtd_theme"
+html_static_path = ['_static']
+autoapi_dirs = ['../../code/src']

@@ -1,0 +1,143 @@
+src.configs
+===========
+
+.. py:module:: src.configs
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   src.configs.JsonKeys
+   src.configs.SolverImplementations
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.configs.prettyPrint2D
+   src.configs.useSolver
+   src.configs.rulesIterator
+
+
+Module Contents
+---------------
+
+.. py:function:: prettyPrint2D(array2D: list[list])
+
+   pretty print of a 2D array (nested list)
+
+   Args:
+       array2D (list[list]): array to be printed
+
+
+.. py:class:: JsonKeys
+
+   Bases: :py:obj:`str`, :py:obj:`enum.Enum`
+
+
+   str(object='') -> str
+   str(bytes_or_buffer[, encoding[, errors]]) -> str
+
+   Create a new string object from the given object. If encoding or
+   errors is specified, then the object must expose a data buffer
+   that will be decoded using the given encoding and error handler.
+   Otherwise, returns the result of object.__str__() (if defined)
+   or repr(object).
+   encoding defaults to 'utf-8'.
+   errors defaults to 'strict'.
+
+
+   .. py:attribute:: startStreet
+      :value: 'startStreet'
+
+
+
+   .. py:attribute:: houseRules
+      :value: 'houseRules'
+
+
+
+   .. py:attribute:: neighborRules
+      :value: 'neighborRules'
+
+
+
+   .. py:attribute:: ruleOrder
+      :value: 'ruleOrder'
+
+
+
+   .. py:attribute:: emptyVal
+      :value: 'emptyVal'
+
+
+
+.. py:class:: SolverImplementations
+
+   Bases: :py:obj:`str`, :py:obj:`enum.Enum`
+
+
+   str(object='') -> str
+   str(bytes_or_buffer[, encoding[, errors]]) -> str
+
+   Create a new string object from the given object. If encoding or
+   errors is specified, then the object must expose a data buffer
+   that will be decoded using the given encoding and error handler.
+   Otherwise, returns the result of object.__str__() (if defined)
+   or repr(object).
+   encoding defaults to 'utf-8'.
+   errors defaults to 'strict'.
+
+
+   .. py:attribute:: classSolver
+      :value: 'class'
+
+
+
+   .. py:attribute:: classNumpySolver
+      :value: 'classNumpy'
+
+
+
+   .. py:attribute:: functionalSolver
+      :value: 'functional'
+
+
+
+   .. py:attribute:: numbaSolver
+      :value: 'numba'
+
+
+
+.. py:function:: useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver)
+
+   opens json file, runs the solver, times it
+
+   Args:
+       path (str): file path to the config file
+       whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
+
+   Raises:
+       KeyError: json is missing a key
+       TypeError: invalid implementation
+       FileNotFoundError: json cant be found/opened
+
+
+.. py:function:: rulesIterator(path: str, minIter: bool = False, cores: int = 0, percentage: float = 0)
+
+   prints #cores fastest iterations (ordered)
+
+   Args:
+       path (str): file path to the config file
+       minIter (bool, optional): if true searches for minimum iterations, otherwise it determines the distribution of recursion calls in all 12! permutations. Defaults to False. will be used. 0 == auto. Defaults to 0.
+       percentage (float): percentage to start from. Defaults to 0.
+
+   Raises:
+       KeyError: json is missing a key
+       FileNotFoundError: json cant be found/opened
+
+

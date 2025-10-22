@@ -1,0 +1,98 @@
+src.calcIter
+============
+
+.. py:module:: src.calcIter
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.calcIter.calcIterWrapper
+   src.calcIter.calcIter
+   src.calcIter.calcMinIterWrapper
+   src.calcIter.calcMinIter
+
+
+Module Contents
+---------------
+
+.. py:function:: calcIterWrapper(conf: tuple) -> dict
+
+   wrapper for calcIter
+
+   Args:
+   conf (tuple): (
+           startStreet (list): nested list with the layouts of the houses
+           houseRules (list): rules for a house, needs 2 constrains
+           neighborRules (list): rules for neighbors
+           emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+           basicOrder (list): order the rules should be applied (first house, then neighbor).
+           start (int): start point of ther permutations
+           end (int): end point of the perutations
+           id (int): id
+           percentage (float): percentage to start from)
+
+   Returns:
+       dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
+
+
+.. py:function:: calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> dict
+
+   goes permutations from start to end and returns dict of total recursive calls and how often they happen with one example value
+
+   Args:
+       startStreet (list): nested list with the layouts of the houses
+       houseRules (list): rules for a house, needs 2 constrains
+       neighborRules (list): rules for neighbors
+       emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+       basicOrder (list): order the rules should be applied (first house, then neighbor).
+       start (int): start point of ther permutations
+       end (int): end point of the perutations
+       id (int): id
+       percentage (float): percentage to start from
+
+   Returns:
+       dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
+
+
+.. py:function:: calcMinIterWrapper(conf: tuple) -> list
+
+   wrapper for calcMinIter
+
+   Args:
+       conf (tuple): (
+           startStreet (list): nested list with the layouts of the houses
+           houseRules (list): rules for a house, needs 2 constrains
+           neighborRules (list): rules for neighbors
+           emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+           basicOrder (list): order the rules should be applied (first house, then neighbor).
+           start (int): start point of ther permutations
+           end (int): end point of the perutations
+           id (int): id
+           percentage (float): percentage to start from)
+
+   Returns:
+       list: [solvetime, order]
+
+
+.. py:function:: calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> list
+
+   goes permutations from start to end and returns the fastest order to solve the riddle
+
+   Args:
+       startStreet (list): nested list with the layouts of the houses
+       houseRules (list): rules for a house, needs 2 constrains
+       neighborRules (list): rules for neighbors
+       emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+       basicOrder (list): order the rules should be applied (first house, then neighbor).
+       start (int): start point of ther permutations
+       end (int): end point of the perutations
+       id (int): id
+       percentage (float): percentage to start from
+
+   Returns:
+       list: [solvetime, order]
+
+

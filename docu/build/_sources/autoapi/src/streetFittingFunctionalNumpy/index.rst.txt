@@ -1,0 +1,131 @@
+src.streetFittingFunctionalNumpy
+================================
+
+.. py:module:: src.streetFittingFunctionalNumpy
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   src.streetFittingFunctionalNumpy.exampleVals
+   src.streetFittingFunctionalNumpy.conv
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   src.streetFittingFunctionalNumpy.houseFitNumpy
+   src.streetFittingFunctionalNumpy.neighborFitNumpy
+   src.streetFittingFunctionalNumpy._recursiveFittingCounterNumpy
+   src.streetFittingFunctionalNumpy.recursiveFittingCounterNumpy
+   src.streetFittingFunctionalNumpy._recursiveFittingNumpy
+   src.streetFittingFunctionalNumpy.recursiveFittingNumpy
+
+
+Module Contents
+---------------
+
+.. py:data:: exampleVals
+
+.. py:function:: houseFitNumpy(street: numpy.ndarray, houseRule: numpy.ndarray, emptyVal: int) -> numpy.ndarray
+
+   Applies houseRule to the street and returns all valid 
+   configurations of the street with the applied value
+
+   Args:
+       street (np.ndarray): the street the house rule should be applied with
+       houseRule (np.ndarray): rule for a house, needs 2 constrains
+       emptyVal (int): the value a empty slot has
+
+   Returns:
+       np.ndarray: array of possible streets
+
+
+.. py:function:: neighborFitNumpy(street: numpy.ndarray, neighborRule: numpy.ndarray, emptyVal: int) -> numpy.ndarray
+
+   Applies neighborRules to the street and returns all valid 
+   configurations of the street with the applied value
+
+   Args:
+       street (np.ndarray): the street the house rule should be applied with
+       neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
+       emptyVal (int): the value a empty slot has
+
+   Returns:
+       np.ndarray: array of possible streets
+
+
+.. py:function:: _recursiveFittingCounterNumpy(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, iteration: int, counter: int, minCounter: int) -> int
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       iteration (int): iteration counter. Defaults to 0.
+       counter (int): call counter
+       minCounter (int): call counter cutoff
+
+   Returns:
+       int: total calls
+
+
+.. py:function:: recursiveFittingCounterNumpy(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, minCounter: int) -> int
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       counter (int): call counter
+       minCounter (int): call counter cutoff
+
+   Returns:
+       int: total calls
+
+
+.. py:function:: _recursiveFittingNumpy(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray, iteration: int, result: numpy.ndarray) -> numpy.ndarray
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       iteration (int): iteration counter
+       result (np.ndarray): array of solutions
+
+   Returns:
+       np.ndarray: array of solutions
+
+
+.. py:function:: recursiveFittingNumpy(streets: numpy.ndarray, houseRules: numpy.ndarray, neighborRules: numpy.ndarray, emptyVal: int, ruleOrder: numpy.ndarray) -> numpy.ndarray
+
+   "Applies house and neighbor rules in ruleOrder to the street
+
+   Args:
+       streets (np.ndarray): array of streets that should be checked
+       houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+       neighborRules (np.ndarray): array rules for neighbors
+       emptyVal (int): the value a empty slot has
+       ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+       result (np.ndarray): array of solutions
+
+   Returns:
+       np.ndarray: array of solutions
+
+
+.. py:data:: conv
+
