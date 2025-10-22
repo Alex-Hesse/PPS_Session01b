@@ -8,6 +8,7 @@ Lösung für das Rätsel von Albert Einstein in Python
 ## References
 
 moodle [here](https://moodle.thi.de/course/view.php?id=7742)
+
 api [here](./docu/build/index.html)
 
 
@@ -19,26 +20,29 @@ Außerdem:
 
 1. Numpy
 
-    pip install numpy
+    ```pip install numpy```
 
 2. Numba
 
-    pip install numba
+    ```pip install numba```
 
 3. Matplotlib
 
-    pip install matplotlib
+
+    ```pip install matplotlib```
 
 
 ## Execution
 
     python main.py
 
-    oder:
+oder:
 
     python main.py -h
 
-
 ## Responsible
+
 Responsible for the repository:
+
 - Alexander Hesse
+
