@@ -9,7 +9,7 @@ Lösung für das Rätsel von Albert Einstein in Python
 
 moodle [here](https://moodle.thi.de/course/view.php?id=7742)
 
-api [here](./docu/build/index.html)
+api [here]((https://Alex-Hesse.github.io/PPS_Session01b/)
 
 
 ## Installation
