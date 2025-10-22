@@ -118,7 +118,7 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
                 t0 = time.perf_counter()
                 results = recursiveFittingNumba(startStreet, houseRules, neighborRules, emptyVal, ruleOrder)
             case _:
-                raise TypeError(f"Invalid SolverImplenation: {whichSolver}")
+                raise TypeError(f"Invalid SolverImplementation: {whichSolver}")
         t1 = time.perf_counter()
         
         for solution in results:
@@ -130,7 +130,7 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
 
 
 def calcSpeedWrapper(conf: tuple) -> list:
-    """_summary_
+    """wrapper for calcSpeed
 
     Args:
         conf (tuple): (startStreet (list): nested list with the layouts of the houses
@@ -157,12 +157,12 @@ def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal
         neighborRules (list): rules for neighbors
         emptyVal (int, optional): the value a empty slot has. Defaults to -1.
         basicOrder (list): order the rules should be applied (first house, then neighbor).
-        start (int): start point of ther permutations
-        end (int): end point of the perutations
+        start (int): start point of the permutations
+        end (int): end point of the permutations
         id (int): id
 
     Returns:
-        list: [solvetime, order]
+        list: [solve time, order]
     """
     minOrder = []
     minIter = 27
@@ -204,7 +204,7 @@ def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
 
     Args:
         path (str): file path to the config file
-        cores (int, optional): how many proceses will be used. 0 == auto. Defaults to 0.
+        cores (int, optional): how many processes will be used. 0 == auto. Defaults to 0.
 
     Raises:
         KeyError: json is missing a key

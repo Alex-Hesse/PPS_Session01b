@@ -8,7 +8,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 class CmdLineOptions(argparse.ArgumentParser):
     def __init__(self):
-        """initialises command line arguments
+        """initializes command line arguments
         """
         super().__init__(prog='PPS_Session01b',
                          description='Solves the riddle of Albert Einstein.',

@@ -5,7 +5,7 @@ import os
 
 
 def main():
-    """main fuction
+    """main function
     """
 
     cmd = CmdLineOptions()

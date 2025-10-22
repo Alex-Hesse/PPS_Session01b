@@ -7,7 +7,7 @@ import time
 
 STREET_TYPE = numba.typeof(np.zeros((5, 5), dtype=np.int64))
 
-# this is just for the dimesions, the values will be integer and not strings
+# this is just for the dimensions, the values will be integer and not strings
 exampleVals = {
     "startStreet": [["", "", "", "", ""],
                     ["", "", "", "", ""],
@@ -37,16 +37,16 @@ exampleVals = {
 
 @njit
 def houseFitNumba(street: np.ndarray, houseRule: np.ndarray, emptyVal:int) -> List:
-    """Apllies houseRule to the street and returns all valid 
+    """Applies houseRule to the street and returns all valid 
     configurations of the street with the applied value
 
     Args:
-        street (np.ndarray): the street the houserule should be apllied with
+        street (np.ndarray): the street the house rule should be applied with
         houseRule (np.ndarray): rule for a house, needs 2 constrains
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+        emptyVal (int): the value a empty slot has
 
     Returns:
-        np.ndarray: np.ndarray of possible streets
+        np.ndarray: array of possible streets
     """
     resultingStreets = List.empty_list(STREET_TYPE)
     
@@ -76,16 +76,16 @@ def houseFitNumba(street: np.ndarray, houseRule: np.ndarray, emptyVal:int) -> Li
 
 @njit
 def neighborFitNumba(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int) -> List:
-    """Apllies neighborRules to the street and returns all valid 
+    """Applies neighborRules to the street and returns all valid 
     configurations of the street with the applied value
 
     Args:
-        street (np.ndarray): the street the houserule should be apllied with
-        neighborRule (np.ndarray): rule for neighbor first part is right neigbor seconde one is the left
+        street (np.ndarray): the street the house rule should be applied with
+        neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
         emptyVal (int): the value a empty slot has
 
     Returns:
-        np.ndarray: np.ndarray of possible streets
+        np.ndarray: array of possible streets
     """
     resultingStreets = List.empty_list(STREET_TYPE)
 
@@ -128,6 +128,21 @@ def neighborFitNumba(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int)
 @njit
 def _recursiveFittingCounterNumba(streets: List, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
                       iteration: int, counter = List) -> List:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        iteration (int): iteration counter
+        counter (int): call counter
+        minCounter (int): call counter cutoff
+
+    Returns:
+        int: total calls
+    """
     # using list to attempt to speed up to the original function code
     counter[0] += 1
     if counter[0] > counter[1]:
@@ -144,7 +159,7 @@ def _recursiveFittingCounterNumba(streets: List, houseRules: np.ndarray, neighbo
                 newStreets = houseFitNumba(street, houseRules[ruleIndex], emptyVal)
                 counter =_recursiveFittingCounterNumba(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, counter)
         elif ruleIndex < len(houseRules) + len(neighborRules):
-            # danach die neighborrules
+            # danach die neighbor rules
             for street in streets:
                 newStreets = neighborFitNumba(street, neighborRules[ruleIndex-len(houseRules)], emptyVal)
                 counter =_recursiveFittingCounterNumba(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, counter)
@@ -156,13 +171,40 @@ def _recursiveFittingCounterNumba(streets: List, houseRules: np.ndarray, neighbo
 
 
 def recursiveFittingCounterNumba(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, minCounter: int) -> int:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        counter (int): call counter
+        minCounter (int): call counter cutoff
+
+    Returns:
+        int: total calls
+    """
     result = _recursiveFittingCounterNumba(List(streets), houseRules, neighborRules, emptyVal, ruleOrder, 0, List(np.array([0, int(minCounter)])))[0]
     return result
 
 @njit
 def _recursiveFittingNumba(streets: List, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
                       iteration: int, result = List) -> List:
-    
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        iteration (int): iteration counter
+        result (np.ndarray): array of solutions
+
+    Returns:
+        np.ndarray: array of solutions
+    """
     if iteration < len(ruleOrder):
         ruleIndex = ruleOrder[iteration]
     else:
@@ -186,11 +228,24 @@ def _recursiveFittingNumba(streets: List, houseRules: np.ndarray, neighborRules:
 
 
 def recursiveFittingNumba(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray) -> List:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        result (np.ndarray): array of solutions
+
+    Returns:
+        np.ndarray: array of solutions
+    """
     result = _recursiveFittingNumba(List(streets), houseRules, neighborRules, emptyVal, ruleOrder, 0, List.empty_list(STREET_TYPE))
     return result
 
 def compileNumba():
-    """doesnt work"""
+    """doesn't work"""
     street = np.full((5,5), 0)
     streets = List(np.array([street for _ in range(7)]))
     houseRule = np.array([1,1,0,0,0])

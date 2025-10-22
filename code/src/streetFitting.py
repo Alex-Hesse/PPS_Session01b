@@ -54,11 +54,11 @@ class StreetFitting():
 
     @staticmethod
     def houseFit(street: list, houseRule: list, emptyVal=-1) -> list:
-        """Apllies houseRule to the street and returns all valid 
+        """Applies houseRule to the street and returns all valid 
         configurations of the street with the applied value
 
         Args:
-            street (list): the street the houserule should be apllied with
+            street (list): the street the house rule should be applied with
             houseRule (list): rule for a house, needs 2 constrains
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
 
@@ -92,12 +92,12 @@ class StreetFitting():
 
     @staticmethod
     def neighborFit(street: list, neighborRule: list, emptyVal=-1) -> list:
-        """Apllies neighborRules to the street and returns all valid 
+        """Applies neighborRules to the street and returns all valid 
         configurations of the street with the applied value
 
         Args:
-            street (list): the street the houserule should be apllied with
-            neighborRule (list): rule for neighbor first part is right neigbor seconde one is the left
+            street (list): the street the house rule should be applied with
+            neighborRule (list): rule for neighbor first part is right neighbor seconde one is the left
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
 
         Returns:
@@ -134,7 +134,7 @@ class StreetFitting():
         return resultingStreets
 
     def _recursiveFitting(self, streets: list, iteration: int = 0):
-        """Applies house and Neigbor rules in ruleOrder to the street
+        """Applies house and Neighbor rules in ruleOrder to the street
 
         Args:
             streets (list): list of streets that should be checked
@@ -152,7 +152,7 @@ class StreetFitting():
                     street, self.houseRules[ruleIndex], self.emptyVal)
                 self._recursiveFitting(newStreets, iteration+1)
         elif ruleIndex < len(self.houseRules) + len(self.neighborRules):
-            # danach die neighborrules
+            # danach die neighbor rules
             for street in streets:
                 newStreets = self.neighborFit(
                     street, self.neighborRules[ruleIndex-len(self.houseRules)], self.emptyVal)
@@ -175,7 +175,7 @@ class StreetFitting():
         return self.fittingStreets
 
     def calculate(self) -> list:
-        """calculates results of startstreet and returns solutions
+        """calculates results of start street and returns solutions
 
         Returns:
             list: solutions

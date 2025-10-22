@@ -1,7 +1,7 @@
 from copy import deepcopy
 import numpy as np
 
-# this is just for the dimesions, the values will be integer and not strings
+# this is just for the dimensions, the values will be integer and not strings
 exampleVals = {
     "startStreet": [["", "", "", "", ""],
                     ["", "", "", "", ""],
@@ -31,16 +31,16 @@ exampleVals = {
 
 
 def houseFitNumpy(street: np.ndarray, houseRule: np.ndarray, emptyVal:int) -> np.ndarray:
-    """Apllies houseRule to the street and returns all valid 
+    """Applies houseRule to the street and returns all valid 
     configurations of the street with the applied value
 
     Args:
-        street (np.ndarray): the street the houserule should be apllied with
+        street (np.ndarray): the street the house rule should be applied with
         houseRule (np.ndarray): rule for a house, needs 2 constrains
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+        emptyVal (int): the value a empty slot has
 
     Returns:
-        np.ndarray: np.ndarray of possible streets
+        np.ndarray: array of possible streets
     """
     resultingStreets = []
     
@@ -70,16 +70,16 @@ def houseFitNumpy(street: np.ndarray, houseRule: np.ndarray, emptyVal:int) -> np
 
 
 def neighborFitNumpy(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int) -> np.ndarray:
-    """Apllies neighborRules to the street and returns all valid 
+    """Applies neighborRules to the street and returns all valid 
     configurations of the street with the applied value
 
     Args:
-        street (np.ndarray): the street the houserule should be apllied with
-        neighborRule (np.ndarray): rule for neighbor first part is right neigbor seconde one is the left
+        street (np.ndarray): the street the house rule should be applied with
+        neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
         emptyVal (int): the value a empty slot has
 
     Returns:
-        np.ndarray: np.ndarray of possible streets
+        np.ndarray: array of possible streets
     """
     resultingStreets = []
 
@@ -121,6 +121,21 @@ def neighborFitNumpy(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int)
 
 def _recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
                       iteration: int, counter:int, minCounter: int) -> int:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        iteration (int): iteration counter. Defaults to 0.
+        counter (int): call counter
+        minCounter (int): call counter cutoff
+
+    Returns:
+        int: total calls
+    """
     counter += 1
     if counter > minCounter:
         return counter
@@ -136,7 +151,7 @@ def _recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, n
             newStreets = houseFitNumpy(street, houseRules[ruleIndex], emptyVal)
             counter =_recursiveFittingCounterNumpy(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, counter, minCounter)
     elif ruleIndex < len(houseRules) + len(neighborRules):
-        # danach die neighborrules
+        # danach die neighbor rules
         for street in streets:
             newStreets = neighborFitNumpy(street, neighborRules[ruleIndex-len(houseRules)], emptyVal)
             counter =_recursiveFittingCounterNumpy(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, counter, minCounter)
@@ -148,12 +163,39 @@ def _recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, n
 
 
 def recursiveFittingCounterNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, minCounter: int) -> int:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        counter (int): call counter
+        minCounter (int): call counter cutoff
+
+    Returns:
+        int: total calls
+    """
     return _recursiveFittingCounterNumpy(streets, houseRules, neighborRules, emptyVal, ruleOrder, 0, 0, minCounter)
 
 
 def _recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray, 
                       iteration: int, result: np.ndarray) -> np.ndarray:
-    
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        iteration (int): iteration counter
+        result (np.ndarray): array of solutions
+
+    Returns:
+        np.ndarray: array of solutions
+    """
     if iteration < len(ruleOrder):
         ruleIndex = ruleOrder[iteration]
     else:
@@ -165,7 +207,7 @@ def _recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighbor
             newStreets = houseFitNumpy(street, houseRules[ruleIndex], emptyVal)
             result =_recursiveFittingNumpy(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, result)
     elif ruleIndex < len(houseRules) + len(neighborRules):
-        # danach die neighborrules
+        # danach die neighbor rules
         for street in streets:
             newStreets = neighborFitNumpy(street, neighborRules[ruleIndex-len(houseRules)], emptyVal)
             result =_recursiveFittingNumpy(newStreets, houseRules, neighborRules, emptyVal, ruleOrder, iteration+1, result)
@@ -181,6 +223,19 @@ def _recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighbor
 
 
 def recursiveFittingNumpy(streets: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal:int, ruleOrder:np.ndarray) -> np.ndarray:
+    """"Applies house and neighbor rules in ruleOrder to the street
+
+    Args:
+        streets (np.ndarray): array of streets that should be checked
+        houseRules (np.ndarray): array of rules for a house, needs 2 constrains
+        neighborRules (np.ndarray): array rules for neighbors
+        emptyVal (int): the value a empty slot has
+        ruleOrder (np.ndarray): order the rules should be applied in (first house, then neighbor)
+        result (np.ndarray): array of solutions
+
+    Returns:
+        np.ndarray: array of solutions
+    """
     result = _recursiveFittingNumpy(streets, houseRules, neighborRules, emptyVal, ruleOrder, 0, np.empty((0)))
     return result
 

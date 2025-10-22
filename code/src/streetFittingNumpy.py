@@ -141,7 +141,7 @@ class StreetFittingNumpy():
         return np.array(resultingStreets)
 
     def _recursiveFitting(self, streets: np.ndarray, iteration: int = 0):
-        """Applies house and Neigbor rules in ruleOrder to the street
+        """Applies house and Neighbor rules in ruleOrder to the street
 
         Args:
             streets (np.ndarray): np.ndarray of streets that should be checked

@@ -65,7 +65,7 @@ class ConvertStrings2Integers():
             integer (int): integer which has been created
 
         Raises:
-            KeyError: if integer doesnt belong to any string
+            KeyError: if integer doesn't belong to any string
 
         Returns:
             str: original string
