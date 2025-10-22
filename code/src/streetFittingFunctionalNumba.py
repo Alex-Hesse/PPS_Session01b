@@ -244,6 +244,7 @@ def recursiveFittingNumba(streets: np.ndarray, houseRules: np.ndarray, neighborR
     result = _recursiveFittingNumba(List(streets), houseRules, neighborRules, emptyVal, ruleOrder, 0, List.empty_list(STREET_TYPE))
     return result
 
+
 def compileNumba():
     """doesn't work"""
     street = np.full((5,5), 0)
@@ -258,6 +259,7 @@ def compileNumba():
     #neighborFitNumba(street, neighborRule, 0)
     recursiveFittingCounterNumba(streets, houseRules, neighborRules, 0, ruleOrder, 5)
     recursiveFittingNumba(streets, houseRules, neighborRules, 0, ruleOrder)
+
 
 if __name__ == "__main__":
     from convertStrings2Integers import ConvertStrings2Integers

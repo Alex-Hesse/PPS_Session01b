@@ -1,17 +1,17 @@
-from streetFitting import StreetFitting
-from streetFittingNumpy import StreetFittingNumpy
-from convertStrings2Integers import ConvertStrings2Integers
 import os
 import json
-from enum import Enum
 import multiprocessing
-import itertools
-import math
-from copy import deepcopy
-import time
-from streetFittingFunctionalNumpy import recursiveFittingCounterNumpy, recursiveFittingNumpy
-from streetFittingFunctionalNumba import recursiveFittingCounterNumba, recursiveFittingNumba
 import numpy as np
+import math
+import time
+from enum import Enum
+from convertStrings2Integers import ConvertStrings2Integers
+from streetFittingNumpy import StreetFittingNumpy
+from streetFitting import StreetFitting
+from streetFittingFunctionalNumpy import recursiveFittingNumpy
+from streetFittingFunctionalNumba import recursiveFittingNumba
+import calcIter
+
 
 def prettyPrint2D(array2D: list[list]):
     """pretty print of a 2D array (nested list)
@@ -30,7 +30,7 @@ def prettyPrint2D(array2D: list[list]):
 
     print(text, end="")
 
-
+# used to access json dict
 class JsonKeys(str, Enum):
     startStreet = "startStreet"
     houseRules = "houseRules"
@@ -38,7 +38,7 @@ class JsonKeys(str, Enum):
     ruleOrder = "ruleOrder"
     emptyVal = "emptyVal"
 
-
+# implementations to compare
 class SolverImplementations(str, Enum):
     classSolver = "class"
     classNumpySolver = "classNumpy"
@@ -47,14 +47,15 @@ class SolverImplementations(str, Enum):
 
 
 def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver):
-    """opens json file, runs the solver
+    """opens json file, runs the solver, times it
 
     Args:
         path (str): file path to the config file
-        useConverter (bool, optional): convert strings to integer. Defaults to True.
+        whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
 
     Raises:
         KeyError: json is missing a key
+        TypeError: invalid implementation
         FileNotFoundError: json cant be found/opened
     """
     if os.path.isfile(path):
@@ -129,82 +130,13 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
         raise FileNotFoundError(f"{path}")
 
 
-def calcSpeedWrapper(conf: tuple) -> list:
-    """wrapper for calcSpeed
-
-    Args:
-        conf (tuple): (startStreet (list): nested list with the layouts of the houses
-            houseRules (list): rules for a house, needs 2 constrains
-            neighborRules (list): rules for neighbors
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-            basicOrder (list): order the rules should be applied (first house, then neighbor).
-            start (int): start point of ther permutations
-            end (int): end point of the perutations
-            id (int): id)
-
-    Returns:
-        list: [solvetime, order]
-    """
-    return calcSpeed(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
-
-
-def calcSpeed(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: int) -> list:
-    """goes permutations from start to end and returns the fastest order to solve the riddle
-
-    Args:
-        startStreet (list): nested list with the layouts of the houses
-        houseRules (list): rules for a house, needs 2 constrains
-        neighborRules (list): rules for neighbors
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-        basicOrder (list): order the rules should be applied (first house, then neighbor).
-        start (int): start point of the permutations
-        end (int): end point of the permutations
-        id (int): id
-
-    Returns:
-        list: [solve time, order]
-    """
-    minOrder = []
-    minIter = 27
-    iterations = end-start
-    alreadyCompleted = (iterations  * percentage) // 100
-    start +=  alreadyCompleted
-    i = alreadyCompleted
-    # todo
-    iCount = 400  # number of % prints
-    iMod = iterations // iCount
-    startStreet =  np.array([startStreet])
-    houseRules = np.array(houseRules)
-    neighborRules = np.array(neighborRules)
-    orders = itertools.islice(itertools.permutations(basicOrder), start, end)
-    t0 = time.process_time()
-    for order in orders:
-        counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), minIter)
-        # fitting.ruleOrder = order
-        # fitting.calculate()
-        if counter < minIter:
-            minIter = counter
-            minOrder = order
-            print(f"Process {id}: \t{minIter} \t\tOrder: {minOrder}")
-            try:
-                with open(os.path.join(".temp", str(minIter)+str(minOrder)), "w", encoding='utf-8') as file:
-                    file.write(str(minIter)+str(minOrder))
-            except:
-                print("error"+ str(minIter)+str(minOrder))
-
-        i += 1
-        if i % iMod == 0:
-            print(f"Process {id}: \t{100*i/iterations} %")  # {time.process_time()-t0}")
-    print(f"Process {id}: Done!")
-    return [minIter, minOrder]
-
-
-def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
+def rulesIterator(path: str, minIter: bool = False, cores: int = 0, percentage: float = 0):
     """prints #cores fastest iterations (ordered)
 
     Args:
         path (str): file path to the config file
-        cores (int, optional): how many processes will be used. 0 == auto. Defaults to 0.
+        minIter (bool, optional): if true searches for minimum iterations, otherwise it determines the distribution of recursion calls in all 12! permutations. Defaults to False. will be used. 0 == auto. Defaults to 0.
+        percentage (float): percentage to start from. Defaults to 0.
 
     Raises:
         KeyError: json is missing a key
@@ -236,6 +168,7 @@ def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
         chunkSize = math.factorial(len(fitting.ruleOrder)) // cores
         
         with multiprocessing.Manager() as manager:
+            # ! slowed down to much
             # minIter = manager.Value('i', 1e10)
             # lock = manager.Lock()
 
@@ -252,17 +185,36 @@ def rulesIterator(path: str, cores: int = 0, percentage: int = 0):
                 args.append((startStreet, houseRules, neighborRules,
                             emptyVal, fitting.ruleOrder, start, end, i+1, percentage))#, minIter, lock))
 
-            # results = [calcSpeedWrapper(args[8])]
+            # results = [function(args[8])]
             # return
             pool = manager.Pool(cores)
             try:
-                results = pool.map(calcSpeedWrapper, args)
-            except Exception as e:
-                print(e)
-                os._exit(-1)
+                if minIter:
+                    results = pool.map(calcIter.calcMinIterWrapper, args)
+                else:
+                    results = pool.map(calcIter.calcIterWrapper, args)
+            except KeyboardInterrupt:
+                pool.join()
 
-        results.sort(key=lambda x: x[0])
-        prettyPrint2D(results)
+        if minIter:
+            results.sort(key=lambda x: x[0])
+            prettyPrint2D(results)
+        else:
+            finalResult = {}
+            for res in results:
+                for counterKey, (count, order) in res.items():
+                    try:
+                        finalResult[counterKey][0] += count
+                    except KeyError:
+                        finalResult[counterKey] = [count, order]
+            
+            sortedItems = sorted(finalResult.items())
+            finalResult = dict(sortedItems)
+            try:
+                with open(os.path.join(".temp", "distribution.json"), "w", encoding='utf-8') as file:
+                    file.write(json.dumps(finalResult ,indent=4))
+            except:
+                print(finalResult)
 
     else:
         raise FileNotFoundError(f"{path}")

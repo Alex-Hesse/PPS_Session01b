@@ -60,7 +60,7 @@ class StreetFitting():
         Args:
             street (list): the street the house rule should be applied with
             houseRule (list): rule for a house, needs 2 constrains
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+            emptyVal (any, optional): the value a empty slot has. Defaults to -1.
 
         Returns:
             list: list of possible streets

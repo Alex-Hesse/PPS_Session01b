@@ -29,6 +29,8 @@ exampleVals = {
 
 
 class StreetFittingNumpy():
+    """Recursive fitting of rules into the street using numpy arrays
+    """
 
     def __init__(self, startStreet: np.ndarray, houseRules: np.ndarray, neighborRules: np.ndarray, emptyVal: int=-1, ruleOrder=np.empty((0))):
         """Recursive fitting of rules into the street
@@ -51,12 +53,12 @@ class StreetFittingNumpy():
             self.ruleOrder = np.array(ruleOrder)
 
     @staticmethod
-    def houseFit(street: np.ndarray, houseRule: np.ndarray, emptyVal=-1) -> np.ndarray:
-        """Apllies houseRule to the street and returns all valid 
+    def houseFit(street: np.ndarray, houseRule: np.ndarray, emptyVal:int=-1) -> np.ndarray:
+        """Applies houseRule to the street and returns all valid 
         configurations of the street with the applied value
 
         Args:
-            street (np.ndarray): the street the houserule should be apllied with
+            street (np.ndarray): the street the house rule should be applied with
             houseRule (np.ndarray): rule for a house, needs 2 constrains
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
 
@@ -91,13 +93,13 @@ class StreetFittingNumpy():
         return np.array(resultingStreets)
 
     @staticmethod
-    def neighborFit(street: np.ndarray, neighborRule: np.ndarray, emptyVal=-1) -> np.ndarray:
-        """Apllies neighborRules to the street and returns all valid 
+    def neighborFit(street: np.ndarray, neighborRule: np.ndarray, emptyVal:int=-1) -> np.ndarray:
+        """Applies neighborRules to the street and returns all valid 
         configurations of the street with the applied value
 
         Args:
-            street (np.ndarray): the street the houserule should be apllied with
-            neighborRule (np.ndarray): rule for neighbor first part is right neigbor seconde one is the left
+            street (np.ndarray): the street the house rule should be applied with
+            neighborRule (np.ndarray): rule for neighbor first part is right neighbor seconde one is the left
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
 
         Returns:
@@ -159,7 +161,7 @@ class StreetFittingNumpy():
                     street, self.houseRules[ruleIndex], self.emptyVal)
                 self._recursiveFitting(newStreets, iteration+1)
         elif ruleIndex < len(self.houseRules) + len(self.neighborRules):
-            # danach die neighborrules
+            # danach die neighbor rules
             for street in streets:
                 newStreets = self.neighborFit(
                     street, self.neighborRules[ruleIndex-len(self.houseRules)], self.emptyVal)
@@ -183,7 +185,7 @@ class StreetFittingNumpy():
         return self.fittingStreets
 
     def calculate(self) -> np.ndarray:
-        """calculates results of startstreet and returns solutions
+        """calculates results of start street and returns solutions
 
         Returns:
             np.ndarray: solutions
