@@ -10,16 +10,15 @@ def calcIterWrapper(conf: tuple) -> dict:
     """wrapper for calcIter
 
     Args:
-    conf (tuple): (
-            startStreet (list): nested list with the layouts of the houses
-            houseRules (list): rules for a house, needs 2 constrains
-            neighborRules (list): rules for neighbors
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-            basicOrder (list): order the rules should be applied (first house, then neighbor).
-            start (int): start point of ther permutations
-            end (int): end point of the perutations
-            id (int): id
-            percentage (float): percentage to start from)
+    conf (tuple): (startStreet (list): nested list with the layouts of the houses
+                    houseRules (list): rules for a house, needs 2 constrains
+                    neighborRules (list): rules for neighbors
+                    emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+                    basicOrder (list): order the rules should be applied (first house, then neighbor).
+                    start (int): start point of the permutations
+                    end (int): end point of the permutations
+                    id (int): id
+                    percentage (float): percentage to start from)
 
     Returns:
         dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
@@ -34,10 +33,10 @@ def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal,
         startStreet (list): nested list with the layouts of the houses
         houseRules (list): rules for a house, needs 2 constrains
         neighborRules (list): rules for neighbors
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+        emptyVal (int, optional): the value a empty slot has
         basicOrder (list): order the rules should be applied (first house, then neighbor).
-        start (int): start point of ther permutations
-        end (int): end point of the perutations
+        start (int): start point of the permutations
+        end (int): end point of the permutations
         id (int): id
         percentage (float): percentage to start from
 
@@ -57,7 +56,7 @@ def calcIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal,
     counterDict = {}
     try:
         for order in orders:
-            counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), 1000000)
+            counter = recursiveFittingCounterNumba(startStreet, houseRules, neighborRules, emptyVal, np.array(order), 10000000)
             try:
                 counterDict[counter][0] += 1
             except KeyError:
@@ -76,19 +75,18 @@ def calcMinIterWrapper(conf: tuple) -> list:
     """wrapper for calcMinIter
 
     Args:
-        conf (tuple): (
-            startStreet (list): nested list with the layouts of the houses
-            houseRules (list): rules for a house, needs 2 constrains
-            neighborRules (list): rules for neighbors
-            emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-            basicOrder (list): order the rules should be applied (first house, then neighbor).
-            start (int): start point of ther permutations
-            end (int): end point of the perutations
-            id (int): id
-            percentage (float): percentage to start from)
+        conf (tuple):   (startStreet (list): nested list with the layouts of the houses
+                        houseRules (list): rules for a house, needs 2 constrains
+                        neighborRules (list): rules for neighbors
+                        emptyVal (int, optional): the value a empty slot has
+                        basicOrder (list): order the rules should be applied (first house, then neighbor).
+                        start (int): start point of the permutations
+                        end (int): end point of the permutations
+                        id (int): id
+                        percentage (float): percentage to start from)
 
     Returns:
-        list: [solvetime, order]
+        list: [solve time, order]
     """
     return calcMinIter(conf[0], conf[1], conf[2], conf[3], conf[4], conf[5], conf[6], conf[7], conf[8])
 
@@ -100,15 +98,15 @@ def calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyV
         startStreet (list): nested list with the layouts of the houses
         houseRules (list): rules for a house, needs 2 constrains
         neighborRules (list): rules for neighbors
-        emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+        emptyVal (int, optional): the value a empty slot has.
         basicOrder (list): order the rules should be applied (first house, then neighbor).
-        start (int): start point of ther permutations
-        end (int): end point of the perutations
+        start (int): start point of there permutations
+        end (int): end point of the permutations
         id (int): id
         percentage (float): percentage to start from
 
     Returns:
-        list: [solvetime, order]
+        list: [solve time, order]
     """
     minOrder = []
     minIter = 27

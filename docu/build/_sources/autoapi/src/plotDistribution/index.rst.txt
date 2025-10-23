@@ -17,7 +17,7 @@ Module Contents
 
 .. py:function:: plotDistribution()
 
-   plots the distribution of recur
+   plots the distribution of recursive calls
        
 
 

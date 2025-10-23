@@ -39,3 +39,20 @@ extensions = [
 html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
 autoapi_dirs = ['../../code/src']
+
+def post_process_html(app, exception):
+    print("called 1")
+    toAdd ='<base href="/PPS_Session01b/">'
+    toSearch = '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />'
+    if exception is None and app.builder.name == 'html':
+        with open(os.path.abspath(os.path.join("build", "index.html")), "r+", encoding='utf-8') as f:
+            content = f.read()
+            newContent = content.replace(toSearch, toSearch+'\n  '+toAdd)
+            f.seek(0)
+            f.truncate()
+            f.write(newContent)
+        print("Changed index.html to work with github pages")
+        
+def  setup(app):
+    print("called 0")
+    app.connect('build-finished', post_process_html)

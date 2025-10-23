@@ -23,16 +23,15 @@ Module Contents
    wrapper for calcIter
 
    Args:
-   conf (tuple): (
-           startStreet (list): nested list with the layouts of the houses
-           houseRules (list): rules for a house, needs 2 constrains
-           neighborRules (list): rules for neighbors
-           emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-           basicOrder (list): order the rules should be applied (first house, then neighbor).
-           start (int): start point of ther permutations
-           end (int): end point of the perutations
-           id (int): id
-           percentage (float): percentage to start from)
+   conf (tuple): (startStreet (list): nested list with the layouts of the houses
+                   houseRules (list): rules for a house, needs 2 constrains
+                   neighborRules (list): rules for neighbors
+                   emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+                   basicOrder (list): order the rules should be applied (first house, then neighbor).
+                   start (int): start point of the permutations
+                   end (int): end point of the permutations
+                   id (int): id
+                   percentage (float): percentage to start from)
 
    Returns:
        dict: {"num rec calls": [int(how often), [example of permutation for this result]]}
@@ -46,10 +45,10 @@ Module Contents
        startStreet (list): nested list with the layouts of the houses
        houseRules (list): rules for a house, needs 2 constrains
        neighborRules (list): rules for neighbors
-       emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+       emptyVal (int, optional): the value a empty slot has
        basicOrder (list): order the rules should be applied (first house, then neighbor).
-       start (int): start point of ther permutations
-       end (int): end point of the perutations
+       start (int): start point of the permutations
+       end (int): end point of the permutations
        id (int): id
        percentage (float): percentage to start from
 
@@ -62,19 +61,18 @@ Module Contents
    wrapper for calcMinIter
 
    Args:
-       conf (tuple): (
-           startStreet (list): nested list with the layouts of the houses
-           houseRules (list): rules for a house, needs 2 constrains
-           neighborRules (list): rules for neighbors
-           emptyVal (int, optional): the value a empty slot has. Defaults to -1.
-           basicOrder (list): order the rules should be applied (first house, then neighbor).
-           start (int): start point of ther permutations
-           end (int): end point of the perutations
-           id (int): id
-           percentage (float): percentage to start from)
+       conf (tuple): (startStreet (list): nested list with the layouts of the houses
+                       houseRules (list): rules for a house, needs 2 constrains
+                       neighborRules (list): rules for neighbors
+                       emptyVal (int, optional): the value a empty slot has
+                       basicOrder (list): order the rules should be applied (first house, then neighbor).
+                       start (int): start point of the permutations
+                       end (int): end point of the permutations
+                       id (int): id
+                       percentage (float): percentage to start from)
 
    Returns:
-       list: [solvetime, order]
+       list: [solve time, order]
 
 
 .. py:function:: calcMinIter(startStreet: list, houseRules: list, neighborRules: list, emptyVal, basicOrder: list, start: int, end: int, id: int, percentage: float) -> list
@@ -85,14 +83,14 @@ Module Contents
        startStreet (list): nested list with the layouts of the houses
        houseRules (list): rules for a house, needs 2 constrains
        neighborRules (list): rules for neighbors
-       emptyVal (int, optional): the value a empty slot has. Defaults to -1.
+       emptyVal (int, optional): the value a empty slot has.
        basicOrder (list): order the rules should be applied (first house, then neighbor).
-       start (int): start point of ther permutations
-       end (int): end point of the perutations
+       start (int): start point of there permutations
+       end (int): end point of the permutations
        id (int): id
        percentage (float): percentage to start from
 
    Returns:
-       list: [solvetime, order]
+       list: [solve time, order]
 
 

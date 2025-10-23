@@ -3,20 +3,23 @@ import json
 import os
 
 def plotDistribution():
-    """plots the distribution of recur
+    """plots the distribution of recursive calls
     """
     with open(os.path.join(".","resources","distribution.json"), "r") as file:
         data = json.load(file)
 
     x = data.keys()
     x = [int(i) for i in x]
-    y = list(data.values())
+    x = [i for i in range(max(x))]
+    
+    y = [0 for _ in range(max(x)+1)]
+    for i in range(max(x)):
+        try:
+            y[i] = data[str(i)][0]
+        except KeyError:
+            y[i] = 0
 
-    y = [i[0] for i in y]
-
-    #
     plt.plot(x, y)
-
 
     # Add labels and a legend for clarity
     plt.xlabel('Number of Recursive Calls')
