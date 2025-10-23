@@ -53,6 +53,13 @@ class StreetFitting():
                 len(self.houseRules) + len(self.neighborRules))]
         else:
             self.ruleOrder = ruleOrder
+        if self.debug:
+            rulesTogether = houseRules+neighborRules
+            print("Rule Order:")
+            for i in ruleOrder:
+                print(str(rulesTogether[i]).strip('\n'))
+            print("##################################################################################")
+            print("##################################################################################")
 
     @staticmethod
     def houseFit(street: list, houseRule: list, emptyVal=-1) -> list:
