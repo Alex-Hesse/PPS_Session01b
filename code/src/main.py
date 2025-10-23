@@ -26,7 +26,7 @@ def main():
         if args.plot:
             plotDistribution()
     else:
-        configs.useSolver(args.rulesFile, args.solverImplementation)
+        configs.useSolver(args.rulesFile, args.solverImplementation, args.debug)
 
 
 if __name__ == "__main__":

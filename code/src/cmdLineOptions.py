@@ -30,6 +30,8 @@ class CmdLineOptions(argparse.ArgumentParser):
                           action='store_true', default=False)
         self.add_argument("-plt", "--plot", help="plots distribution",
                           action='store_true', default=False)
+        self.add_argument("-d", "--debug", help="runs streetFitting using strings",
+                          action='store_true', default=False)
 
 
 if __name__ == "__main__":

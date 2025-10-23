@@ -46,7 +46,7 @@ class SolverImplementations(str, Enum):
     numbaSolver = "numba"
 
 
-def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver):
+def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver, debug: bool = False):
     """opens json file, runs the solver, times it
 
     Args:
@@ -75,11 +75,14 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
             print(e)
             raise KeyError("useSolver: Json config file is missing a key")
 
-        conv = ConvertStrings2Integers()
-        startStreet = conv.obj2int(startStreet)
-        houseRules = conv.obj2int(houseRules)
-        neighborRules = conv.obj2int(neighborRules)
-        emptyVal = conv.str2int(emptyVal)
+        if not debug:
+            conv = ConvertStrings2Integers()
+            startStreet = conv.obj2int(startStreet)
+            houseRules = conv.obj2int(houseRules)
+            neighborRules = conv.obj2int(neighborRules)
+            emptyVal = conv.str2int(emptyVal)
+        else:
+            whichSolver = str(SolverImplementations.classSolver.value)
         
         match SolverImplementations(whichSolver):
             case SolverImplementations.classSolver:
@@ -123,7 +126,10 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
         t1 = time.perf_counter()
         
         for solution in results:
-            arr = conv.obj2str([[int(i) for i in r] for r in solution])
+            if debug:
+                arr = solution
+            else:
+                arr = conv.obj2str([[int(i) for i in r] for r in solution])
             prettyPrint2D(arr)
         print(f"{whichSolver} calculation time: {t1-t0}s")
     else:
