@@ -14,7 +14,7 @@ def main():
     args = cmd.parse_args()
 
     # choose what mode
-    if args.bruteForce or args.parallelBruteForce or args.improveOrder or args.plot:
+    if args.bruteForce or args.parallelBruteForce or args.improveOrder or args.plot or args.iterPermutations:
         if args.bruteForce:
             bruteForce.evaluateBruteForce()
         if args.parallelBruteForce:
