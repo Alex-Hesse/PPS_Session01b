@@ -31,7 +31,7 @@ exampleVals = {
 
 class StreetFitting():
 
-    def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[]):
+    def __init__(self, startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[], debug: bool = False):
         """Recursive fitting of rules into the street
 
         Args:
@@ -40,7 +40,9 @@ class StreetFitting():
             neighborRules (list): rules for neighbors
             emptyVal (int, optional): the value a empty slot has. Defaults to -1.
             ruleOrder (list, optional): order the rules should be applied (first house, then neighbor). Defaults to [].
+            debug (bool, optional): debug mode prints each street. Defaults to False.
         """
+        self.debug = debug
         self.startStreet = deepcopy(startStreet)
         self.houseRules = deepcopy(houseRules)
         self.neighborRules = deepcopy(neighborRules) 
@@ -140,6 +142,12 @@ class StreetFitting():
             streets (list): list of streets that should be checked
             iteration (int, optional): iteration counter. Defaults to 0.
         """
+        if self.debug:
+            from configs import prettyPrint2D
+            for street in streets:
+                prettyPrint2D(street)
+                print("----------------------------------------------------------------------------------")
+            print("##################################################################################")
         if iteration < len(self.ruleOrder):
             ruleIndex = self.ruleOrder[iteration]
         else:

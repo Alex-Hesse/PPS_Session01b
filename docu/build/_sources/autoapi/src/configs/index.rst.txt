@@ -113,14 +113,15 @@ Module Contents
 
 
 
-.. py:function:: useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver)
+.. py:function:: useSolver(path: str, whichSolver: SolverImplementations = SolverImplementations.classSolver, debug: bool = False)
 
    opens json file, runs the solver, times it
 
    Args:
        path (str): file path to the config file
        whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
-
+       debug (bool, optional): debug mode for class. Defaults to False.
+       
    Raises:
        KeyError: json is missing a key
        TypeError: invalid implementation

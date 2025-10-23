@@ -52,7 +52,8 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
     Args:
         path (str): file path to the config file
         whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
-
+        debug (bool, optional): debug mode for class. Defaults to False.
+        
     Raises:
         KeyError: json is missing a key
         TypeError: invalid implementation
@@ -88,7 +89,7 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
             case SolverImplementations.classSolver:
                 t0 = time.perf_counter()
                 fitting = StreetFitting(startStreet, houseRules,
-                                neighborRules, emptyVal, ruleOrder)
+                                neighborRules, emptyVal, ruleOrder, debug)
                 results = fitting.calculate()
                 
             case SolverImplementations.classNumpySolver:

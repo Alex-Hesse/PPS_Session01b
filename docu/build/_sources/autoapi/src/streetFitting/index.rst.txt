@@ -25,7 +25,12 @@ Module Contents
 
 .. py:data:: exampleVals
 
-.. py:class:: StreetFitting(startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[])
+.. py:class:: StreetFitting(startStreet: list, houseRules: list, neighborRules: list, emptyVal=-1, ruleOrder=[], debug: bool = False)
+
+   .. py:attribute:: debug
+      :value: False
+
+
 
    .. py:attribute:: startStreet
 

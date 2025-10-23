@@ -115,7 +115,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#src.configs.prettyPrint2D" title="src.configs.prettyPrint2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prettyPrint2D</span></code></a>(array2D)</p></td>
 <td><p>pretty print of a 2D array (nested list)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#src.configs.useSolver" title="src.configs.useSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">useSolver</span></code></a>(path[, whichSolver])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#src.configs.useSolver" title="src.configs.useSolver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">useSolver</span></code></a>(path[, whichSolver, debug])</p></td>
 <td><p>opens json file, runs the solver, times it</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#src.configs.rulesIterator" title="src.configs.rulesIterator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rulesIterator</span></code></a>(path[, minIter, cores, percentage])</p></td>
@@ -213,11 +213,12 @@ errors defaults to ‘strict’.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.configs.useSolver">
-<span class="sig-prename descclassname"><span class="pre">src.configs.</span></span><span class="sig-name descname"><span class="pre">useSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whichSolver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.configs.SolverImplementations" title="src.configs.SolverImplementations"><span class="pre">SolverImplementations</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SolverImplementations.classSolver</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.configs.useSolver" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">src.configs.</span></span><span class="sig-name descname"><span class="pre">useSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">whichSolver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.configs.SolverImplementations" title="src.configs.SolverImplementations"><span class="pre">SolverImplementations</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SolverImplementations.classSolver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.configs.useSolver" title="Link to this definition"></a></dt>
 <dd><p>opens json file, runs the solver, times it</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>path (str): file path to the config file
-whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.</p>
+whichSolver (SolverImplementations, optional): what implementation to use. Defaults to SolverImplementations.classSolver.
+debug (bool, optional): debug mode for class. Defaults to False.</p>
 </dd>
 <dt>Raises:</dt><dd><p>KeyError: json is missing a key
 TypeError: invalid implementation

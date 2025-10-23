@@ -61,7 +61,7 @@ Module Contents
    wrapper for calcMinIter
 
    Args:
-       conf (tuple): (startStreet (list): nested list with the layouts of the houses
+       conf (tuple):   (startStreet (list): nested list with the layouts of the houses
                        houseRules (list): rules for a house, needs 2 constrains
                        neighborRules (list): rules for neighbors
                        emptyVal (int, optional): the value a empty slot has
