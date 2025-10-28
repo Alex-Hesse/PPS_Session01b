@@ -2,7 +2,7 @@
 import os
 import itertools
 import time
-from streetFittingFunctionalNumba import recursiveFittingCounterNumba
+from streetFittingProcedureNumba import recursiveFittingCounterNumba
 import numpy as np
 import math
 

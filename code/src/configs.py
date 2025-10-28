@@ -8,8 +8,8 @@ from enum import Enum
 from convertStrings2Integers import ConvertStrings2Integers
 from streetFittingNumpy import StreetFittingNumpy
 from streetFitting import StreetFitting
-from streetFittingFunctionalNumpy import recursiveFittingNumpy
-from streetFittingFunctionalNumba import recursiveFittingNumba
+from streetFittingProcedureNumpy import recursiveFittingNumpy
+from streetFittingProcedureNumba import recursiveFittingNumba
 import calcIter
 
 
@@ -42,7 +42,7 @@ class JsonKeys(str, Enum):
 class SolverImplementations(str, Enum):
     classSolver = "class"
     classNumpySolver = "classNumpy"
-    functionalSolver = "functional"
+    procedureSolver = "procedure"
     numbaSolver = "numba"
 
 
@@ -98,7 +98,7 @@ def useSolver(path: str, whichSolver: SolverImplementations = SolverImplementati
                                 neighborRules, emptyVal, ruleOrder)
                 results = fitting.calculate()
                 
-            case SolverImplementations.functionalSolver:
+            case SolverImplementations.procedureSolver:
                 
                 startStreet = np.array([startStreet])
                 houseRules = np.array(houseRules)
